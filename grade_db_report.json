@@ -1,0 +1,3180 @@
+[
+  {
+    "idx": 0,
+    "instruction": "Write a query returning the top 3 orders by amount for each region in a single s",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 1,
+    "instruction": "Write a query showing daily sales with a running total and running average over ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 2,
+    "instruction": "Write a MERGE statement that adds incoming inventory quantities to a daily snaps",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 3,
+    "instruction": "Write a query listing customers who have never placed an order, using a NULL-saf",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 4,
+    "instruction": "Write a hierarchical query showing each employee with their depth and full repor",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 5,
+    "instruction": "Write a recursive common table expression that explodes a bill of materials, rol",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 6,
+    "instruction": "Write a query concatenating each order's line items into an ordered comma-separa",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 7,
+    "instruction": "Write a query finding gaps in a sequence of issued check numbers, returning each",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 8,
+    "instruction": "Write a query pivoting sales channel counts per quarter into columns using the P",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 9,
+    "instruction": "Write a query producing a per-customer spend cross-tab using conditional aggrega",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 10,
+    "instruction": "Write a PL/SQL procedure that applies a percentage rate to every account balance",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 11,
+    "instruction": "Write a deterministic PL/SQL function that buckets a price into a category label",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "sql",
+        "line": 13,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 12,
+    "instruction": "Write an AFTER UPDATE trigger that records old and new salary values into an aud",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 13,
+    "instruction": "Write a PL/SQL function that safely looks up an order status, returning a sentin",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 14,
+    "instruction": "Write a PL/SQL function returning the row count of any table by name using dynam",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "sql",
+        "line": 11,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 15,
+    "instruction": "Write a query extracting scalar values from a JSON document column, casting them",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 16,
+    "instruction": "Write a PL/SQL function that counts business days between two dates, excluding w",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 17,
+    "instruction": "Write a query showing each employee alongside their manager's name using a self-",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 18,
+    "instruction": "Write a query computing a three-month moving average of monthly revenue aligned ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 19,
+    "instruction": "Write a query normalizing phone numbers to digits only and flagging rows that co",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 20,
+    "instruction": "Write a query that shows, for each region, the total sales and the share of each",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 21,
+    "instruction": "Write a PL/SQL procedure that inserts a new product, catching a duplicate primar",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 14,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 16,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 22,
+    "instruction": "Write a query that splits a comma-separated tag list stored in one column into r",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 23,
+    "instruction": "Write a query ranking products by unit price within each category using DENSE_RA",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 24,
+    "instruction": "Write a query that lists every employee and their hire year, flagging anniversar",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 25,
+    "instruction": "Write a query that detects sessions that have been idle for more than an hour, s",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 26,
+    "instruction": "Write a query showing the daily order volume and its 7-day moving average for a ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 27,
+    "instruction": "Write a query that returns the newest order per customer using a correlated subq",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 28,
+    "instruction": "Write a query that fills gaps in a sparse daily series by generating a full cale",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 29,
+    "instruction": "Write a PL/SQL block that iterates a cursor over employees and prints each name ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "anon",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 30,
+    "instruction": "Write a query that computes the total number of orders and the distinct customer",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 31,
+    "instruction": "Write a query that returns rows where a payment amount differs from the original",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 32,
+    "instruction": "Write a query that assigns a sequence number to each row within a result set usi",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 33,
+    "instruction": "Write a query that counts how many occurrences of a substring appear in a text c",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 34,
+    "instruction": "Write a query that returns all combinations of a small set of statuses with a li",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 35,
+    "instruction": "Write a query that finds duplicate product codes while listing each duplicate's ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 36,
+    "instruction": "Write a query that rolls up order amounts to multiple aggregation levels (total,",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 37,
+    "instruction": "Write a PL/SQL procedure that processes a batch of order rows, committing every ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 38,
+    "instruction": "Write a query that converts rows of configuration values (key/value pairs) into ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 39,
+    "instruction": "Write a query that lists tables whose names contain a number, using a LIKE patte",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 40,
+    "instruction": "Write a query that shows each order's line total and the running total of lines ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 41,
+    "instruction": "Write a query that calculates the percentage of total sales contributed by each ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 42,
+    "instruction": "Write a query that assigns quartiles to customer lifetime value and counts custo",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 43,
+    "instruction": "Write a query that shows, for each department, the employee count and the maximu",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 44,
+    "instruction": "Write a query that returns the top 3 highest-scoring players, including ties at ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 45,
+    "instruction": "Write a PL/SQL procedure that validates and logs a failed insert, using an auton",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 46,
+    "instruction": "Write a query that groups order lines by product and returns the total quantity ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 47,
+    "instruction": "Write a query that shows each employee's salary with a column comparing it to th",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 48,
+    "instruction": "Write a PL/SQL procedure that swaps two rows' values safely within a transaction",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 14,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 49,
+    "instruction": "Write a query that lists duplicate email addresses and, for each, all matching r",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 50,
+    "instruction": "Write a PL/SQL function that returns the last non-empty value in a series of a c",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 51,
+    "instruction": "Write a query that finds orders whose ship date was more than 30 days after the ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 52,
+    "instruction": "Write a query that shows total revenue per month with a comparison to the same m",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 53,
+    "instruction": "Write a query that returns the running count of distinct products added over tim",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 54,
+    "instruction": "Write a PL/SQL procedure that renames a column safely by checking for its existe",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 55,
+    "instruction": "Write a query that selects rows where a numeric column falls within a specified ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 56,
+    "instruction": "Write a query that shows, for each product, the total units sold in the current ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 57,
+    "instruction": "Write a PL/SQL function that returns the count of rows in a table that match a f",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "sql",
+        "line": 15,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 58,
+    "instruction": "Write a query that identifies consecutive day sequences in a login history, grou",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 59,
+    "instruction": "Write a PL/SQL procedure that upserts a customer, inserting when absent and upda",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 18,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 60,
+    "instruction": "Write a query that returns each order with its rank by total amount, plus the am",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 61,
+    "instruction": "Write a query that shows the cumulative sum of expenses and the running average,",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 62,
+    "instruction": "Write a query that computes the number of days each account has been open, round",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 63,
+    "instruction": "Write a PL/SQL block that demonstrates the difference between WHERE-filtered row",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "anon",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 64,
+    "instruction": "Write a query that returns the second and third most recent order per customer u",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 65,
+    "instruction": "Write a query that shows each department's count of employees and the count of d",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 66,
+    "instruction": "Write a PL/SQL procedure that logs each step of a processing loop into a table u",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 11,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "sql",
+        "line": 13,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 67,
+    "instruction": "Write a query that finds products whose price is strictly between the min and ma",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 68,
+    "instruction": "Write a query that returns the first and last order date per customer, plus the ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 69,
+    "instruction": "Write a PL/SQL procedure that refreshes a materialized-view-like summary table f",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 14,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "sql",
+        "line": 16,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 70,
+    "instruction": "Write a query that lists products with no sales in the last 30 days using an ant",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 71,
+    "instruction": "Write a query that calculates the month-over-month change in total sales using a",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 72,
+    "instruction": "Write a PL/SQL procedure that raises a user-defined error with a custom message ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 9,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 73,
+    "instruction": "Write a query that returns each item along with its rank within its warehouse by",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 74,
+    "instruction": "Write a query that detects rows where a numeric total does not equal the sum of ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 75,
+    "instruction": "Write a query that returns the department with the highest average salary per re",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 76,
+    "instruction": "Write a PL/SQL procedure that deletes rows older than a threshold and reports th",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 14,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 77,
+    "instruction": "Write a query that computes the share of each product's sales within its categor",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 78,
+    "instruction": "Write a query that shows each employee's salary and its percentile rank within t",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 79,
+    "instruction": "Write a query that returns the top 2 selling products per category by total quan",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 80,
+    "instruction": "Write a query that lists each region and the number of orders in it, including r",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 81,
+    "instruction": "Write a query that computes, for each day, the total sales and the difference fr",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 82,
+    "instruction": "Write a query that returns products where the list price is greater than the ave",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 83,
+    "instruction": "Write a query that counts how many employees fall into each salary band using a ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 84,
+    "instruction": "Write a query that identifies duplicate shipment records where the same order an",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 85,
+    "instruction": "Write a PL/SQL procedure that uses a cursor with a FOR UPDATE clause to lock row",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 14,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "sql",
+        "line": 16,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 86,
+    "instruction": "Write a query that returns each customer's most recent order date and whether th",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 87,
+    "instruction": "Write a query that shows each warehouse's total stock value and its share of com",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 88,
+    "instruction": "Write a query that computes a 3-day rolling sum of orders by region, partitionin",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 89,
+    "instruction": "Write a query that returns orders placed on a weekend by joining to a generated ",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 90,
+    "instruction": "Write a PL/SQL procedure that empties a table using TRUNCATE and reports the tab",
+    "schema": "GRADER",
+    "results": [
+      {
+        "kind": "plsql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "anon",
+        "line": 10,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "sql",
+        "line": 12,
+        "verdict": "PASS",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "idx": 91,
+    "instruction": "Write a query against the HR sample schema that lists each department name and t",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=107 got=107"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=27 got=27"
+      }
+    ]
+  },
+  {
+    "idx": 92,
+    "instruction": "Write a query that returns the five highest-paid employees in the HR schema, sho",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=24000 got=24000"
+      }
+    ]
+  },
+  {
+    "idx": 93,
+    "instruction": "Write a query showing the average, minimum, and maximum salary per department in",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=6461.83 got=6461.83"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2100 got=2100"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=24000 got=24000"
+      }
+    ]
+  },
+  {
+    "idx": 94,
+    "instruction": "Write a query that counts employees by job in the HR schema and returns the thre",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=19 got=19"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=30 got=30"
+      }
+    ]
+  },
+  {
+    "idx": 95,
+    "instruction": "Write a query listing all regions and the number of countries in each, using the",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=5 got=5"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=25 got=25"
+      }
+    ]
+  },
+  {
+    "idx": 96,
+    "instruction": "Write a query that identifies employees in the HR schema earning more than the a",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=51 got=51"
+      }
+    ]
+  },
+  {
+    "idx": 97,
+    "instruction": "Write a query showing each employee in the HR schema with their manager's last n",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=107 got=107"
+      }
+    ]
+  },
+  {
+    "idx": 98,
+    "instruction": "Write a query against the CO sample schema listing each store and its total orde",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=23 got=23"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1950 got=1950"
+      }
+    ]
+  },
+  {
+    "idx": 99,
+    "instruction": "Write a query that returns the total quantity sold per product in the CO schema,",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=3914 got=3914"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=\"Girl's Trousers (Red)\" got=\"Girl's Trousers (Red)\""
+      }
+    ]
+  },
+  {
+    "idx": 100,
+    "instruction": "Write a query that shows the average order value per customer in the CO schema, ",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=158.26 got=158.26"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=8.66 got=8.66"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=529.4 got=529.4"
+      }
+    ]
+  },
+  {
+    "idx": 101,
+    "instruction": "Write a query counting orders by status in the CO schema, ordered from most to l",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1892 got=1892"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=35 got=35"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=23 got=23"
+      }
+    ]
+  },
+  {
+    "idx": 102,
+    "instruction": "Write a query that lists products whose unit price is above the average product ",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=46 got=46"
+      }
+    ]
+  },
+  {
+    "idx": 103,
+    "instruction": "Write a query that returns the most recent 5 orders in the CO schema, showing or",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1950 got=1950"
+      }
+    ]
+  },
+  {
+    "idx": 104,
+    "instruction": "Write a query that shows the number of line items per order in the CO schema and",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1950 got=1950"
+      }
+    ]
+  },
+  {
+    "idx": 105,
+    "instruction": "Write a query against the HR schema's DEMO_OBJECT_TABLE that returns all rows or",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='seed row' got='seed row'"
+      }
+    ]
+  },
+  {
+    "idx": 106,
+    "instruction": "Write a query that joins the HR DEMO_OBJECT_TABLE to its audit trail, listing ea",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='INSERT' got='INSERT'"
+      }
+    ]
+  },
+  {
+    "idx": 107,
+    "instruction": "Write a query that selects from the HR DEMO_OBJECT_VIEW and confirms it mirrors ",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 108,
+    "instruction": "Write a query that counts employees in the HR schema by decade of hire, using EX",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=107 got=107"
+      }
+    ]
+  },
+  {
+    "idx": 109,
+    "instruction": "Write a query that returns the total commission paid across the HR employees, co",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=73690 got=73690"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=35 got=35"
+      }
+    ]
+  },
+  {
+    "idx": 110,
+    "instruction": "Write a query that lists the distinct managers referenced in the HR employees ta",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=18 got=18"
+      }
+    ]
+  },
+  {
+    "idx": 111,
+    "instruction": "Write a query against the CO PRODUCT_REVIEWS view that returns the average ratin",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=266 got=266"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=\"Boy's Coat (Brown)\" got=\"Boy's Coat (Brown)\""
+      }
+    ]
+  },
+  {
+    "idx": 112,
+    "instruction": "Write a query against the CO schema's STORE_ORDERS view that sums total sales ac",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1234394.12 got=1234394.12"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=60 got=60"
+      }
+    ]
+  },
+  {
+    "idx": 113,
+    "instruction": "Write a query that returns the top-selling product by total sales from the CO PR",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=109 got=109"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=\"Girl's Trousers (Red)\" got=\"Girl's Trousers (Red)\""
+      }
+    ]
+  },
+  {
+    "idx": 114,
+    "instruction": "Write a query that counts how many products have received a rating of 5 in the C",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=26 got=26"
+      }
+    ]
+  },
+  {
+    "idx": 115,
+    "instruction": "Write a query against the CO schema's DEMO_OBJECT_TABLE that returns the object ",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 116,
+    "instruction": "Write a query that reports the count of order line items with a quantity of exac",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=5 got=5"
+      }
+    ]
+  },
+  {
+    "idx": 117,
+    "instruction": "Write a query that lists the distinct product names that have reviews in the CO ",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=46 got=46"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=46 got=46"
+      }
+    ]
+  },
+  {
+    "idx": 118,
+    "instruction": "Write a query against the HR schema that ranks each employee's salary within the",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=10 got=10"
+      }
+    ]
+  },
+  {
+    "idx": 119,
+    "instruction": "Write a query against the HR schema that computes each employee's salary as a pe",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=691416 got=691416"
+      }
+    ]
+  },
+  {
+    "idx": 120,
+    "instruction": "Write a query against the HR schema that returns the employees who joined earlie",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='Garcia' got='Garcia'"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='Banda' got='Banda'"
+      }
+    ]
+  },
+  {
+    "idx": 121,
+    "instruction": "Write a query against the HR schema that aggregates employees by the month they ",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='JUN' got='JUN'"
+      }
+    ]
+  },
+  {
+    "idx": 122,
+    "instruction": "Write a query against the HR schema that returns the salary value at the fifth r",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=13500 got=13500.0"
+      }
+    ]
+  },
+  {
+    "idx": 123,
+    "instruction": "Write a query against the HR schema that lists each employee along with the runn",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=691416 got=691416"
+      }
+    ]
+  },
+  {
+    "idx": 124,
+    "instruction": "Write a query against the CO schema that finds the customer with the highest tot",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='Cori Ablin' got='Cori Ablin'"
+      }
+    ]
+  },
+  {
+    "idx": 125,
+    "instruction": "Write a query against the CO schema that shows the average number of line items ",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2.01 got=2.01"
+      }
+    ]
+  },
+  {
+    "idx": 126,
+    "instruction": "Write a query against the CO schema that counts orders by status and returns the",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='REFUNDED' got='REFUNDED'"
+      }
+    ]
+  },
+  {
+    "idx": 127,
+    "instruction": "Write a query against the CO schema that lists order line items whose quantity e",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=5 got=5"
+      }
+    ]
+  },
+  {
+    "idx": 128,
+    "instruction": "Write a query against the CO schema that computes each store's share of total sa",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1234394.12 got=1234394.12"
+      }
+    ]
+  },
+  {
+    "idx": 129,
+    "instruction": "Write a query against the CO schema that lists the number of reviews per rating ",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=26 got=26"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=21 got=21"
+      }
+    ]
+  },
+  {
+    "idx": 130,
+    "instruction": "Write a query against the CO schema that counts how many distinct customers have",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=392 got=392"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=392 got=392"
+      }
+    ]
+  },
+  {
+    "idx": 131,
+    "instruction": "Write a query against the HR schema's DEMO_JSON_ITEM table that extracts the cat",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2 got=2"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1250 got=1250"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='HR' got='HR'"
+      }
+    ]
+  },
+  {
+    "idx": 132,
+    "instruction": "Write a query against the HR DEMO_JSON_CATEGORY_REPORT view that returns categor",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2120.5 got=2120.5"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2 got=2"
+      }
+    ]
+  },
+  {
+    "idx": 133,
+    "instruction": "Write a query against the HR DEMO_JSON_FILE_REPORT view that shows the loading s",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2120.5 got=2120.5"
+      }
+    ]
+  },
+  {
+    "idx": 134,
+    "instruction": "Write a query against the HR schema's DEMO_JSON_ITEM table that extracts a JSON ",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 135,
+    "instruction": "Write a query against the CO schema's DEMO_JSON_ITEM table that returns the tota",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=3 got=3"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=718.49 got=718.49"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='Furniture' got='Furniture'"
+      }
+    ]
+  },
+  {
+    "idx": 136,
+    "instruction": "Write a query against the CO schema's DEMO_JSON_ITEM table that extracts a numer",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 137,
+    "instruction": "Write a query against the CO DEMO_JSON_FILE_REPORT view that confirms the load c",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 138,
+    "instruction": "Write a query against the HR schema that uses a hierarchical CONNECT BY to show ",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=107 got=107"
+      }
+    ]
+  },
+  {
+    "idx": 139,
+    "instruction": "Write a query against the CO schema's DEMO_JSON_ITEM table that sums amounts by ",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='Furniture' got='Furniture'"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=718.49 got=718.49"
+      }
+    ]
+  },
+  {
+    "idx": 140,
+    "instruction": "Write a query against the HR schema's DEMO_JSON_ITEM table that lists each item ",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2 got=2"
+      }
+    ]
+  },
+  {
+    "idx": 141,
+    "instruction": "Write a query against the CO schema's DEMO_JSON_ITEM table that filters items wh",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 142,
+    "instruction": "Write a query against the HR schema that returns the average salary grouped by j",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='AD_PRES' got='AD_PRES'"
+      }
+    ]
+  },
+  {
+    "idx": 143,
+    "instruction": "Write a SQL query that calls the HR schema's DEMO_JSON_PKG.total_amount function",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2120.5 got=2120.5"
+      }
+    ]
+  },
+  {
+    "idx": 144,
+    "instruction": "Write a query against the HR schema's DEMO_JSON_ITEM table that uses JSON_TABLE ",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 145,
+    "instruction": "Write a query against the CO schema that extracts all items from the raw JSON fi",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=3 got=3"
+      }
+    ]
+  },
+  {
+    "idx": 146,
+    "instruction": "Write a query against the CO schema's DEMO_JSON_ITEM table that lists items with",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2 got=2"
+      }
+    ]
+  },
+  {
+    "idx": 147,
+    "instruction": "Write a query against the CO schema that computes the total amount per category ",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=718.49 got=718.49"
+      }
+    ]
+  },
+  {
+    "idx": 148,
+    "instruction": "Write a query against the HR schema's DEMO_JSON_ITEM table that finds the item w",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='Recruiting campaign' got='Recruiting campaign'"
+      }
+    ]
+  },
+  {
+    "idx": 149,
+    "instruction": "Write a query against the HR schema's EMPLOYEES table that shows each employee's",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=58 got=58"
+      }
+    ]
+  },
+  {
+    "idx": 150,
+    "instruction": "Write a query against the HR schema's EMPLOYEES table that returns employees ear",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 151,
+    "instruction": "Write a query against the CO schema's ORDERS and ORDER_ITEMS tables that shows t",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=3 got=3"
+      }
+    ]
+  },
+  {
+    "idx": 152,
+    "instruction": "Write a query against the CO schema's PRODUCT_REVIEWS view that returns products",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=16 got=16"
+      }
+    ]
+  },
+  {
+    "idx": 153,
+    "instruction": "Write a query against the CO schema's STORE_ORDERS view that lists the stores wi",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=23 got=23"
+      }
+    ]
+  },
+  {
+    "idx": 154,
+    "instruction": "Write a PL/SQL block against the HR schema that calls DEMO_OBJECT_ADD to insert ",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "anon",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 155,
+    "instruction": "Write a query against the HR schema's DEMO_JSON_ITEM table that returns the item",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2 got=2"
+      }
+    ]
+  },
+  {
+    "idx": 156,
+    "instruction": "Write a PL/SQL block against the CO schema that calls DEMO_JSON_PKG.total_amount",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "anon",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=219.49 got=219.49"
+      }
+    ]
+  },
+  {
+    "idx": 157,
+    "instruction": "Write a query against the CO schema's DEMO_JSON_ITEM table that computes the ave",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=109.75 got=109.75"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=499 got=499"
+      }
+    ]
+  },
+  {
+    "idx": 158,
+    "instruction": "Write a query against the HR schema's DEMO_JSON_ITEM table that lists items, exp",
+    "schema": "HR",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 159,
+    "instruction": "Write a query against the CO schema's DEMO_JSON_ITEM table that joins item rows ",
+    "schema": "CO",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=3 got=3"
+      }
+    ]
+  },
+  {
+    "idx": 160,
+    "instruction": "Write a query against the SALES_LAB schema's LLM_SALES_MONTHLY_REPORT view that ",
+    "schema": "SALES_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=3 got=3"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2 got=2"
+      }
+    ]
+  },
+  {
+    "idx": 161,
+    "instruction": "Write a query against the SALES_LAB schema that lists all orders with their regi",
+    "schema": "SALES_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=3 got=3"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2 got=2"
+      }
+    ]
+  },
+  {
+    "idx": 162,
+    "instruction": "Write a query against the SALES_LAB schema's LLM_SALES_REGION_MV materialized vi",
+    "schema": "SALES_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2 got=2"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=13700.5 got=13700.5"
+      }
+    ]
+  },
+  {
+    "idx": 163,
+    "instruction": "Write a query against the SALES_LAB schema that calls the LLM_SALES_REGION_TOTAL",
+    "schema": "SALES_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=4450.5 got=4450.5"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=9250 got=9250"
+      }
+    ]
+  },
+  {
+    "idx": 164,
+    "instruction": "Write a query against the SALES_LAB schema that extracts the JSON 'sku' value fr",
+    "schema": "SALES_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=3 got=3"
+      }
+    ]
+  },
+  {
+    "idx": 165,
+    "instruction": "Write a query against the SALES_LAB schema's LLM_SALES_LOAD_ERRORS table that re",
+    "schema": "SALES_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=0 got=0"
+      }
+    ]
+  },
+  {
+    "idx": 166,
+    "instruction": "Write a query against the DOCUMENTS_LAB schema's LLM_DOC_SUPPLIER_REPORT view th",
+    "schema": "DOCUMENTS_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=4520.75 got=4520.75"
+      }
+    ]
+  },
+  {
+    "idx": 167,
+    "instruction": "Write a query against the DOCUMENTS_LAB schema that joins the normalized invoice",
+    "schema": "DOCUMENTS_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 168,
+    "instruction": "Write a query against the DOCUMENTS_LAB schema's LLM_DOC_INVOICE table that extr",
+    "schema": "DOCUMENTS_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='USD' got='USD'"
+      }
+    ]
+  },
+  {
+    "idx": 169,
+    "instruction": "Write a query against the DOCUMENTS_LAB schema's LLM_DOC_INBOX table that checks",
+    "schema": "DOCUMENTS_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 170,
+    "instruction": "Write a query against the DOCUMENTS_LAB schema that calls the LLM_DOC_PKG.SUPPLI",
+    "schema": "DOCUMENTS_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=4520.75 got=4520.75"
+      }
+    ]
+  },
+  {
+    "idx": 171,
+    "instruction": "Write a query against the OPS_LAB schema's LLM_OPS_JOB_REPORT view that lists sc",
+    "schema": "OPS_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='LLM_OPS_HEALTH_JOB' got='LLM_OPS_HEALTH_JOB'"
+      }
+    ]
+  },
+  {
+    "idx": 172,
+    "instruction": "Write a query against the OPS_LAB schema's LLM_OPS_EVENT_LOG table that shows th",
+    "schema": "OPS_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='ORDER_LOAD' got='ORDER_LOAD'"
+      }
+    ]
+  },
+  {
+    "idx": 173,
+    "instruction": "Write a query against the SALES_LAB schema's LLM_SALES_ORDER_AUDIT trigger that ",
+    "schema": "SALES_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=1 got=1"
+      }
+    ]
+  },
+  {
+    "idx": 174,
+    "instruction": "Write a query against the SALES_LAB schema that computes total revenue per chann",
+    "schema": "SALES_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=4450.5 got=4450.5"
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=2 got=2"
+      }
+    ]
+  },
+  {
+    "idx": 175,
+    "instruction": "Write a query against the OPS_LAB schema that shows the scheduler job's repeat i",
+    "schema": "OPS_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected='FREQ=HOURLY' got='FREQ=HOURLY'"
+      }
+    ]
+  },
+  {
+    "idx": 176,
+    "instruction": "Write a query against the SALES_LAB schema that uses JSON_TABLE to flatten each ",
+    "schema": "SALES_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=38 got=38"
+      }
+    ]
+  },
+  {
+    "idx": 177,
+    "instruction": "Write a query against the DOCUMENTS_LAB schema that returns the average invoice ",
+    "schema": "DOCUMENTS_LAB",
+    "results": [
+      {
+        "kind": "sql",
+        "line": 1,
+        "verdict": "PASS",
+        "note": ""
+      },
+      {
+        "kind": "check",
+        "line": 0,
+        "verdict": "CHECK_PASS",
+        "note": "expected=4520.75 got=4520.75"
+      }
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+{"id": "sales-001", "answer": "SELECT * FROM llm_sales_monthly_report ORDER BY report_month, revenue_rank;"}
+{"id": "sales-001", "answer": "SELECT * FROM llm_sales_monthly_report;"}
+{"id": "ops-001", "answer": "SELECT job_name, enabled, state FROM llm_ops_job_report WHERE enabled = 'FALSE';"}
+{"id": "ops-001", "answer": "SELECT job_name, enabled, state FROM llm_ops_job_report WHERE enabled = 'TRUE';"}
+{"id": "docs-001", "answer": "BEGIN llm_doc_pkg.ingest_invoice('bright-001.json', '{\"invoiceId\":\"BRIGHT-001\",\"supplier\":\"Bright Office\",\"invoiceDate\":\"2026-03-01\",\"total\":805,\"attributes\":{\"currency\":\"USD\"}}'); END;"}

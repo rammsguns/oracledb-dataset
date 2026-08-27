@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/home/kiwi/oracle-db-dataset/grade_db.py", line 330, in <module>
+    main(sys.argv[1] if len(sys.argv) > 1 else "oracle_dataset_full.jsonl")
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kiwi/oracle-db-dataset/grade_db.py", line 205, in main
+    conn = oracledb.connect(user="system", password=os.environ.get(
+        "ORACLE_PASSWORD", "oracle"), dsn=dsn)
+  File "/home/kiwi/oracle-db-dataset/.venv/lib/python3.14/site-packages/oracledb/connection.py", line 1768, in connect
+    return conn_class(dsn=dsn, pool=pool, params=params, **kwargs)
+  File "/home/kiwi/oracle-db-dataset/.venv/lib/python3.14/site-packages/oracledb/connection.py", line 892, in __init__
+    impl.connect(params_impl)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "src/oracledb/impl/thin/connection.pyx", line 544, in oracledb.thin_impl.ThinConnImpl.connect
+  File "src/oracledb/impl/thin/connection.pyx", line 540, in oracledb.thin_impl.ThinConnImpl.connect
+  File "src/oracledb/impl/thin/connection.pyx", line 482, in oracledb.thin_impl.ThinConnImpl._connect_with_params
+  File "src/oracledb/impl/thin/connection.pyx", line 463, in oracledb.thin_impl.ThinConnImpl._connect_with_description
+  File "src/oracledb/impl/thin/connection.pyx", line 432, in oracledb.thin_impl.ThinConnImpl._connect_with_address
+  File "src/oracledb/impl/thin/protocol.pyx", line 368, in oracledb.thin_impl.Protocol._connect_phase_two
+  File "src/oracledb/impl/thin/protocol.pyx", line 494, in oracledb.thin_impl.Protocol._process_message
+  File "src/oracledb/impl/thin/messages/base.pyx", line 102, in oracledb.thin_impl.Message._check_and_raise_exception
+oracledb.exceptions.DatabaseError: ORA-01017: invalid credential or not authorized; logon denied
+Help: https://docs.oracle.com/error-help/db/ora-01017/

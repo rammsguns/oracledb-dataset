@@ -1,0 +1,40 @@
+{
+  "stats": {
+    "examples": 178,
+    "sql_ok": 160,
+    "sql_fail": 2,
+    "plsql_unverified": 19,
+    "anon_unverified": 14,
+    "examples_with_sql_failures": 2,
+    "examples_with_code": 178,
+    "no_code_found": 0
+  },
+  "failures": [
+    {
+      "idx": 15,
+      "instruction": "Write a query extracting scalar values from a JSON document column, casting them to their ",
+      "fail_count": 1,
+      "details": [
+        {
+          "kind": "sql",
+          "line": 1,
+          "ok": false,
+          "note": "ParseError: Expecting ). Line 2, Col: 47.\n  SELECT payload_id,\n       JSON_VALUE(doc, '$.cus"
+        }
+      ]
+    },
+    {
+      "idx": 136,
+      "instruction": "Write a query against the CO schema's DEMO_JSON_ITEM table that extracts a numeric attribu",
+      "fail_count": 1,
+      "details": [
+        {
+          "kind": "sql",
+          "line": 1,
+          "ok": false,
+          "note": "ParseError: Expecting ). Line 2, Col: 59.\n  SELECT item_name,\n       JSON_VALUE(attributes, "
+        }
+      ]
+    }
+  ]
+}

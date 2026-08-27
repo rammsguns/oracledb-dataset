@@ -1,0 +1,10 @@
+# Oracle LLM dataset — Python dependencies
+# Install into the project venv with:  uv pip install -r requirements.txt
+# Python 3.14 recommended (matches .venv)
+
+oracledb>=4.0.2        # thin-mode Oracle client (no OCI needed); drives grade_db.py + evaluate_catalog.py
+sqlglot>=30.17         # layer-1 SQL lint (grade_parse.py, lint_grounded.py)
+
+# Runtime only, not imported by the pipeline:
+#   - Docker + gvenzl/oracle-free:23-slim provides the live Oracle instance.
+#   - HuggingFace `datasets` (optional) is used only by load_dataset.py.

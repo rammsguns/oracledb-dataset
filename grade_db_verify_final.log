@@ -1,0 +1,5 @@
+=== EXECUTION GRADER SUMMARY ===
+  PASS               108
+  examples with >=1 FAIL: 0 / 91
+
+report -> grade_db_report.json

@@ -1,0 +1,9 @@
+=== EXECUTION GRADER SUMMARY ===
+  PASS               313
+  SCHEMA_MISS        161
+  SCHEMA_SETUP_FAIL  24
+  SKIP               29
+  UNKNOWN            67
+  examples with >=1 FAIL: 0 / 418
+
+report -> grade_db_report.json
