@@ -1,0 +1,21 @@
+# Next challenger (Step 5): target ORA-00942 with schema-grounded DDL examples.
+# Mixes oracle_train_code_only.jsonl (160) with oracle_train_schema_grounded.jsonl
+# (13 records carrying real per-table DDL in the input, so the model learns the
+# schema-name -> object-name mapping). Explicit source list + weights.
+base_model: Qwen/Qwen2.5-Coder-7B-Instruct
+base_model_revision: c03e6d358207e414f1eca0bb1891e29f1db0e242
+adapter: lora
+load_in_4bit: true
+max_length: 2048
+epochs: 4
+learning_rate: 0.0002
+per_device_batch_size: 1
+gradient_accumulation: 16
+seed: 42
+train_variant: sql_only
+# Grounded DDL records are weighted higher so the object-name mapping dominates.
+mixture:
+  - file: ../oracle_train_code_only.jsonl
+    weight: 1.0
+  - file: ../oracle_train_schema_grounded.jsonl
+    weight: 3.0

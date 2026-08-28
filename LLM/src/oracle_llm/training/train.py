@@ -154,8 +154,19 @@ def train_qlora(
     model.print_trainable_parameters()
 
     # --- Datasets ----------------------------------------------------------
-    train_sources = [cfg.train_file] if not cfg.mixture else [m["file"] for m in cfg.mixture]
-    train_records = validate_records(load_records(train_sources))
+    if not cfg.mixture:
+        train_sources = [cfg.train_file]
+        train_records = validate_records(load_records(train_sources))
+    else:
+        # Weighted mixture: concatenate sources, replicating each by weight so
+        # a higher weight over-samples that source (config declares weights).
+        train_sources = [m["file"] for m in cfg.mixture]
+        weighted: List[dict] = []
+        for m in cfg.mixture:
+            recs = validate_records(load_records([m["file"]]))
+            reps = max(1, int(round(m.get("weight", 1.0))))
+            weighted.extend(recs * reps)
+        train_records = weighted
     train_ds = _tokenize_dataset(train_records, tokenizer, cfg.max_length)
     eval_ds = None
     if eval_records:
