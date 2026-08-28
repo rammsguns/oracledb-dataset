@@ -15,15 +15,29 @@ at training time; this file is the human-readable template and reference.
 - **Intended use**: emit executable Oracle SQL/PLSQL and explain/repair Oracle
   database errors. Two serving modes: `sql_only` and `explain`.
 
-## Selected adapter (2026-08-28)
+## Selected adapter (2026-08-28, production release candidate)
 
-The promoted release candidate is **`sql_only-qlora`**, fine-tuned on
-`oracle_train_code_only.jsonl` (160 examples). It achieved **24/150 (16.0%)**
-on the unchanged 150-task held-out execution catalog against live Oracle at
-temperature 0 — the best of all variants (chat 10.7%, error_repair 6.7%,
-base baseline 5.3%) — with the best controlled-error performance (6/25) and no
-regression vs baseline. This is a release candidate, not a final production
-claim. See `docs/reports/sql-only-selection-v1.md` and `NEXT_STEPS.md` Phase 4.
+The promoted release candidate is **`sql-only-rag`** (v1.0.2): the `sql_only`
+LoRA adapter plus the approved **schema-context retrieval layer** (indexes the
+resettable lab schemas' DDL — tables, columns, PK/unique/FK, check constraints,
+views — never the held-out catalog). It achieved **55/150 (36.7%)** on the
+unchanged 150-task held-out execution catalog against live Oracle at
+temperature 0, with **11/25 controlled-error** accuracy — up from the adapter
+alone (24/150, 16.0%) and the base model (8/150, 5.3%). See
+`docs/reports/challenger-sql-only-rag.md` and `CHANGELOG.md`.
+
+### Release history
+
+| version | champion | held-out pass | controlled-error | notes |
+|---|---|---|---|---|
+| v1.0.0 | (dataset release) | — | — | original dataset + catalog v1.0.0 |
+| v1.0.1 | sql_only-qlora | 16.0% | 6/25 | pipeline, eval, serving (follow-up) |
+| v1.0.2 | **sql-only-rag** | **36.7%** | **11/25** | schema-context retrieval added |
+| v1.0.3 | sql-only-rag | 36.7% | 11/25 | operational safety (disposable-schema guard, monitoring) |
+
+Rollback target: **v1.0.1** (sql_only-qlora, no retrieval) is the tested
+fallback — disabling `--schema-index` restores the pre-retrieval behavior with
+zero weight change.
 
 ## Training
 

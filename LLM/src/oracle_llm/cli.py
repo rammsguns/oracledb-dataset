@@ -208,6 +208,8 @@ def _cmd_serve(argv):
     ap.add_argument("--max-new-tokens", type=int, default=1024)
     ap.add_argument("--schema-index", help="path to approved schema index JSON "
                     "(enables schema-context retrieval in sql_only mode)")
+    ap.add_argument("--read-only", action="store_true",
+                    help="staged read-only pilot: refuse DML/DDL requests (SELECT only)")
     args = ap.parse_args(argv)
 
     from oracle_llm.serving.app import _Backend, serve
@@ -229,7 +231,7 @@ def _cmd_serve(argv):
     serve(
         host=args.host, port=args.port,
         backend=backend, default_max_tokens=args.max_new_tokens,
-        retriever=retriever,
+        retriever=retriever, read_only=args.read_only,
     )
 
 

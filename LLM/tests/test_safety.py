@@ -120,3 +120,61 @@ def test_serving_metrics_record_retrieval_miss_and_errors():
     assert snap["retrieval_misses"] == 1
     assert snap["sql_only"] == 2
     assert "retrieval_miss_rate" in snap
+
+
+# --- Read-only pilot (S1) -------------------------------------------------
+
+def test_read_only_asks_for_write():
+    from oracle_llm.serving.app import _asks_for_write
+
+    assert _asks_for_write("insert an order")
+    assert _asks_for_write("update the inventory")
+    assert _asks_for_write("DELETE FROM orders")
+    assert _asks_for_write("create a table")
+    assert _asks_for_write("merge these rows")
+    assert not _asks_for_write("select orders")
+    assert not _asks_for_write("show customers")
+    assert not _asks_for_write("what is the total sales")
+
+
+def test_read_only_pilot_refuses_dml():
+    from fastapi.testclient import TestClient
+
+    from oracle_llm.serving.app import _Backend, create_app
+
+    app = create_app(
+        backend=_Backend(generate=lambda msgs, t: "SELECT 1 FROM dual;", model_id="m"),
+        read_only=True,
+    )
+    c = TestClient(app)
+    # read-oriented -> allowed
+    r = c.post("/v1/chat/completions",
+               json={"model": "m", "messages": [{"role": "user", "content": "show orders"}],
+                     "response_mode": "sql_only"})
+    assert r.status_code == 200
+    # DML -> refused 422
+    r2 = c.post("/v1/chat/completions",
+                json={"model": "m", "messages": [{"role": "user", "content": "insert an order"}],
+                      "response_mode": "sql_only"})
+    assert r2.status_code == 422
+    # refusal tracked in metrics
+    m = c.get("/metrics").json()
+    assert m["refusals"] == 1
+    assert m["refusal_rate"] > 0
+
+
+def test_read_only_pilot_non_sql_only_ignores():
+    from fastapi.testclient import TestClient
+
+    from oracle_llm.serving.app import _Backend, create_app
+
+    app = create_app(
+        backend=_Backend(generate=lambda msgs, t: "explanation", model_id="m"),
+        read_only=True,
+    )
+    c = TestClient(app)
+    # explain mode is not subject to the read-only SQL refusal
+    r = c.post("/v1/chat/completions",
+               json={"model": "m", "messages": [{"role": "user", "content": "how to update x"}],
+                     "response_mode": "explain"})
+    assert r.status_code == 200

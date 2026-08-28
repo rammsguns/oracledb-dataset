@@ -33,15 +33,30 @@ SCHEMA_TOKEN_PATTERN = re.compile(r"([A-Za-z_][A-Za-z0-9_]*(?:\.LAB)?)", re.IGNO
 
 
 class SchemaRetriever:
-    """Retrieve schema DDL context for a request's target schema."""
+    """Retrieve schema DDL context for a request's target schema.
+
+    Supports both the v1 index format ``{schema: {table: {...}}}`` and the
+    enriched v2 format ``{version, generated, schemas: {schema: {tables,
+    views}}}``. v2 adds foreign keys, check constraints, and table
+    descriptions to the rendered DDL.
+    """
 
     def __init__(self, index_path: str | Path):
         self.index_path = Path(index_path)
         if not self.index_path.is_file():
             raise FileNotFoundError(f"schema index not found: {self.index_path}")
         with self.index_path.open(encoding="utf-8") as fh:
-            self.index: Dict[str, dict] = json.load(fh)
-        # Lowercase schema name -> canonical schema name
+            data = json.load(fh)
+        # Normalize v1 or v2 into {SCHEMA: {"tables": {...}, "views": {...}}}
+        self.version = data.get("version", "v1")
+        raw_schemas = data.get("schemas") if "schemas" in data else data
+        self.index: Dict[str, dict] = {}
+        for name, payload in (raw_schemas or {}).items():
+            if isinstance(payload, dict) and "tables" in payload:
+                self.index[name] = payload
+            else:
+                # v1: payload is {table: meta}
+                self.index[name] = {"tables": payload, "views": {}}
         self._canon = {k.lower(): k for k in self.index}
 
     def schemas(self) -> List[str]:
@@ -62,18 +77,36 @@ class SchemaRetriever:
         return None
 
     def format_schema_ddl(self, name: str) -> str:
-        """Render a schema's table definitions as compact DDL for the prompt."""
+        """Render a schema's table + view definitions as compact DDL.
+
+        Includes columns, PK, unique, FK, check constraints, and (when
+        present) a concise table description.
+        """
         schema = self.get_schema(name)
         if not schema:
             return ""
-        lines = [f"-- {name} schema (tables and columns)"]
-        for tbl, meta in sorted(schema.items()):
+        tables = schema.get("tables", schema)  # tolerate v1 {table: meta}
+        views = schema.get("views", {})
+        lines = [f"-- {name} schema (tables, columns, constraints, views)"]
+        for tbl, meta in sorted(tables.items()):
+            desc = meta.get("description")
+            if desc:
+                lines.append(f"-- {tbl}: {desc}")
             cols = ", ".join(f"{c} {t}" for c, t in meta.get("columns", []))
             lines.append(f"{tbl} ({cols})")
             if meta.get("pk"):
                 lines.append(f"  PRIMARY KEY ({', '.join(meta['pk'])})")
             for u in meta.get("unique", []):
                 lines.append(f"  UNIQUE ({u})")
+            for fk in meta.get("fk", []):
+                ref = fk.get("references", {})
+                lines.append(f"  FOREIGN KEY ({fk.get('column')}) "
+                             f"REFERENCES {ref.get('table')} ({', '.join(ref.get('columns', []))})")
+            for c in meta.get("check", []):
+                lines.append(f"  CHECK ({c})")
+        for v in sorted(views.keys()):
+            vdesc = views.get(v) or ""
+            lines.append(f"-- view {v}{(': ' + vdesc) if vdesc else ''}")
         return "\n".join(lines)
 
     def build_context_prompt(self, user_content: str, *, mode: str = "sql_only") -> str:
