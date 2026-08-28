@@ -1,0 +1,2 @@
+[console_scripts]
+oracle-llm = oracle_llm.cli:main

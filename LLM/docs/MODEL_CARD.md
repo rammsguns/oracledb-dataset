@@ -1,0 +1,76 @@
+# Model Card — Oracle Database LLM assistant
+
+This card describes the LoRA adapter produced by the pipeline in this
+directory. It is populated automatically into `artifacts/<run>/model_card.json`
+at training time; this file is the human-readable template and reference.
+
+## Model
+
+- **Type**: LoRA adapter (PEFT) on top of an open instruction base model.
+- **Base model**: `Qwen/Qwen2.5-Coder-7B-Instruct`
+- **Base model revision**: `c03e6d358207e414f1eca0bb1891e29f1db0e242` (pinned
+  in `configs/training/qlora-7b-sql-only.yaml`).
+- **Adapter**: QLoRA (4-bit NF4), `r=16`, `alpha=32`, `dropout=0.05`,
+  `target_modules=all-linear`, `bias=none`.
+- **Intended use**: emit executable Oracle SQL/PLSQL and explain/repair Oracle
+  database errors. Two serving modes: `sql_only` and `explain`.
+
+## Selected adapter (2026-08-28)
+
+The promoted release candidate is **`sql_only-qlora`**, fine-tuned on
+`oracle_train_code_only.jsonl` (160 examples). It achieved **24/150 (16.0%)**
+on the unchanged 150-task held-out execution catalog against live Oracle at
+temperature 0 — the best of all variants (chat 10.7%, error_repair 6.7%,
+base baseline 5.3%) — with the best controlled-error performance (6/25) and no
+regression vs baseline. This is a release candidate, not a final production
+claim. See `docs/reports/sql-only-selection-v1.md` and `NEXT_STEPS.md` Phase 4.
+
+## Training
+
+- Method: supervised fine-tuning (SFT), assistant-only loss masking (prompt
+  tokens are `-100`).
+- Variants: `chat`, `sql_only`, `error_repair` (trained separately; never
+  implicitly mixed).
+- Data: the frozen, versioned dataset at the repository root
+  (`../oracle_train_chat.jsonl` etc.). Training files are validated and
+  fingerprinted (SHA-256) before use.
+- Guardrail: the held-out execution catalog `llm_task_catalog_eval.jsonl`
+  (150 tasks) is NEVER used for training, prompt examples, or retrieval.
+  It is used only for final recorded evaluation.
+
+## Evaluation
+
+- Offline: generation via a Transformers or OpenAI-compatible backend at
+  `temperature=0`.
+- Online: `evaluate_catalog.py` runs candidates against a live Oracle instance
+  (resetting resettable schemas before each task) and records pass/executed-ok/
+  checksum per task.
+- Held-out execution accuracy is the primary selection metric, not validation
+  loss.
+
+## Intended users
+
+Developers and DBAs who want a deterministic Oracle SQL/PLSQL assistant. For
+`sql_only` mode the model is prompted to return only executable SQL/PLSQL.
+
+## Limitations & risks
+
+- The training set is small (160 chat / 160 code-only / 56 repair examples);
+  the model is an adapter, not a foundation model. It is not a substitute for
+  reviewing generated SQL against real schemas.
+- Deterministic executable evaluation is only valid at `temperature=0` with
+  SQL-only prompts.
+- Database credentials are environment-driven; never bake them into model
+  outputs, prompts, config, or logs.
+- Generated SQL should be reviewed before execution on production systems.
+
+## Safety
+
+- No credentials, database dumps, or user data are committed to this
+  repository.
+- The pipeline fails closed if the held-out catalog is supplied to training.
+
+## Provenance
+
+Every run writes `provenance.json` (base revision, train files + hashes,
+package versions, git revision, config, seed, timestamp) next to the adapter.

@@ -1,0 +1,39 @@
+[project]
+name = "oracle-llm"
+version = "0.1.0"
+description = "Training, evaluation, and serving for an Oracle Database assistant"
+requires-python = ">=3.11"
+dependencies = [
+    "transformers>=4.45",
+    "datasets>=3.0",
+    "peft>=0.13",
+    "accelerate>=1.0",
+    "sentencepiece>=0.2",
+    "bitsandbytes>=0.44",
+    "pyyaml>=6.0",
+    "oracledb>=4.0.2",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "pydantic>=2.0",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.4"]
+
+[project.scripts]
+oracle-llm = "oracle_llm.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

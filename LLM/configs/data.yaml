@@ -1,0 +1,9 @@
+# Paths are relative to the LLM directory.
+train_chat: ../oracle_train_chat.jsonl
+train_sql_only: ../oracle_train_code_only.jsonl
+train_error_repair: ../oracle_train_error_repair.jsonl
+validation: ../oracle_eval_holdout.jsonl
+held_out_execution_eval: ../llm_task_catalog_eval.jsonl
+
+# This file is a policy boundary. The held-out catalog must never be used by
+# a training or retrieval job.

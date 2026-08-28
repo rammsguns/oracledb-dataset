@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: oracle-llm
+Version: 0.1.0
+Summary: Training, evaluation, and serving for an Oracle Database assistant
+Requires-Python: >=3.11
+Requires-Dist: transformers>=4.45
+Requires-Dist: datasets>=3.0
+Requires-Dist: peft>=0.13
+Requires-Dist: accelerate>=1.0
+Requires-Dist: sentencepiece>=0.2
+Requires-Dist: bitsandbytes>=0.44
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: oracledb>=4.0.2
+Requires-Dist: fastapi>=0.110
+Requires-Dist: uvicorn>=0.29
+Requires-Dist: pydantic>=2.0
+Requires-Dist: httpx>=0.27
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: ruff>=0.4; extra == "dev"
