@@ -128,7 +128,34 @@ curl -s localhost:8000/v1/chat/completions \
 
 A real deployment sets a `generate` backend that loads the base model + adapter.
 
-### Production hardening (Phase 5)
+### Operational safety (generated-SQL execution boundary)
+
+- **Generation is separate from execution.** The serving API (`oracle-llm
+  serve`) NEVER connects to Oracle or executes SQL — it only generates text.
+  SQL execution happens only in the evaluation harness (`evaluate_catalog.py`)
+  and the regression suite (`scripts/regression_suite.py`).
+- **Execution is confined to disposable/resettable lab schemas.** The guard
+  `oracle_llm/evaluation/safety.py` (see `assert_executable_schema`) fails
+  closed: generated SQL may ONLY execute against the resettable lab schemas
+  (SALES_LAB, DOCUMENTS_LAB, OPS_LAB, LOGISTICS_LAB, SUPPORT_LAB). Read-only
+  sample schemas (HR/CO) are permitted only for read-only SQL
+  (`read_only_ok=False` rejects them for DML). Production schemas are never an
+  execution target.
+- **Credentials are environment-only.** Lab/sample passwords come solely from
+  env vars (`ORACLE_LAB_PW_*`, `ORACLE_SAMPLE_PW_*`). No credentials are ever
+  hardcoded or committed. `ORACLE_SYSTEM_PASSWORD` is used only by the dataset
+  grader that builds/drops the GRADER scratch schema — never by serving or the
+  LLM execution path.
+- **Monitoring (staging):**
+  - `GET /metrics` exposes `retrieval_misses`, `retrieval_miss_rate`, and
+    `oracle_error_categories` (schema-context retrieval misses and Oracle error
+    buckets from execution).
+  - The regression suite prints an Oracle error-category breakdown
+    (`object-not-found`, `syntax`, `constraint/business-rule`, etc.) via
+    `classify_error_category`.
+  - Staging should alert on: retrieval-miss rate spikes, a sudden rise in
+    `object-not-found` (ORA-00942), or any attempt to execute against a
+    non-disposable schema (the guard logs/rejects it).
 
 - **Request-size limit**: bodies over `MAX_BODY_BYTES` (2 MiB) are rejected with
   413; per-message length cap (200k chars) returns 400.

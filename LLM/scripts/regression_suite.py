@@ -96,7 +96,19 @@ def _ask(base_url: str, prompt: str) -> str:
 
 
 def _execute(schema: str, sql: str) -> str:
-    """Execute returned SQL as the schema user; return 'ERR:...' or 'ok:rows=N'."""
+    """Execute returned SQL as the schema user; return 'ERR:...' or 'ok:rows=N'.
+
+    Operational safety: refuse to execute against any schema that is not a
+    disposable/resettable lab schema (fail-closed). Credentials come only from
+    the environment; never production.
+    """
+    sys.path.insert(0, os.path.join(LLM, "src"))
+    from oracle_llm.evaluation.safety import assert_executable_schema
+
+    try:
+        assert_executable_schema(schema, read_only_ok=False)
+    except Exception as e:  # noqa: BLE001
+        return "ERR:safety:" + str(e)[:80]
     pw = os.environ.get("ORACLE_LAB_PW_" + schema, "")
     if not pw:
         return "ERR:missing env"
@@ -155,6 +167,9 @@ def main() -> int:
 
     failures = []
     ora942 = 0
+    from collections import Counter
+
+    error_categories: Counter = Counter()
     for schema, prompt, expect, val_sql in CASES:
         if not args.no_reset:
             try:
@@ -178,10 +193,17 @@ def main() -> int:
         mark = "PASS" if (ok_exec and expect_found) else "FAIL"
         if "ORA-00942" in result:
             ora942 += 1
+        # Oracle error-category monitoring (classify the execute error)
+        sys.path.insert(0, os.path.join(LLM, "src"))
+        from oracle_llm.evaluation.safety import classify_error_category
+
+        cat = classify_error_category(result)
+        error_categories[cat] += 1
         print(f"  [{mark}] {schema}: {prompt[:50]}... exec={result[:30]} expect={expect!r} found={expect_found}")
         if mark == "FAIL":
             failures.append((schema, prompt))
     print(f"\nORA-00942 (table not found) count: {ora942}/{len(CASES)}")
+    print("Oracle error categories:", dict(error_categories.most_common()))
     if failures:
         print(f"FAILURES: {len(failures)}")
         return 1

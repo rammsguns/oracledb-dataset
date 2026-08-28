@@ -92,3 +92,24 @@ class SchemaRetriever:
             f"Use only the objects and columns listed above.\n\n"
             f"Task: {user_content}"
         )
+
+    def retrieve(self, user_content: str, *, mode: str = "sql_only") -> dict:
+        """Return retrieval metadata for monitoring.
+
+        Emits a dict with whether a schema was detected, the schema name, and
+        whether DDL was injected. This is the hook for retrieval-miss metrics
+        (a request that named a schema but got no context is a retrieval miss).
+        """
+        if mode != "sql_only":
+            return {"detected": False, "schema": None, "injected": False, "miss": False}
+        schema = self.detect_schema(user_content)
+        if not schema:
+            return {"detected": False, "schema": None, "injected": False, "miss": False}
+        ddl = self.format_schema_ddl(schema)
+        injected = bool(ddl)
+        return {
+            "detected": True,
+            "schema": schema,
+            "injected": injected,
+            "miss": not injected,
+        }

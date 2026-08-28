@@ -79,6 +79,8 @@ class _Metrics:
         self.sql_only = 0
         self.explain = 0
         self.total_latency_ms = 0.0
+        self.retrieval_misses = 0
+        self.oracle_errors: dict = {}
         self._lock = None
         try:
             import threading
@@ -93,7 +95,8 @@ class _Metrics:
                 return fn()
         return fn()
 
-    def record(self, *, mode: str, latency_ms: float, error: bool = False) -> None:
+    def record(self, *, mode: str, latency_ms: float, error: bool = False,
+               retrieval_miss: bool = False, oracle_error: str | None = None) -> None:
         def _f():
             self.requests += 1
             self.total_latency_ms += latency_ms
@@ -103,6 +106,10 @@ class _Metrics:
                 self.explain += 1
             if error:
                 self.errors += 1
+            if retrieval_miss:
+                self.retrieval_misses += 1
+            if oracle_error:
+                self.oracle_errors[oracle_error] = self.oracle_errors.get(oracle_error, 0) + 1
 
         self._mut(_f)
 
@@ -117,6 +124,9 @@ class _Metrics:
                 "sql_only": self.sql_only,
                 "explain": self.explain,
                 "avg_latency_ms": round(self.total_latency_ms / n, 1),
+                "retrieval_misses": self.retrieval_misses,
+                "retrieval_miss_rate": round(100.0 * self.retrieval_misses / (self.sql_only or 1), 2),
+                "oracle_error_categories": dict(sorted(self.oracle_errors.items())),
             }
 
         return self._mut(_f)
@@ -233,10 +243,12 @@ def create_app(
             system = EXPLAIN_SYSTEM
 
         # Build messages: replace/insert system prompt per mode. For sql_only,
-        # inject retrieved schema context into the user turn (Step 2 RAG).
+        # inject retrieved schema context into the user turn (Step 2 RAG) and
+        # record retrieval-miss metrics.
         messages = []
         has_system = False
         retriever = app.state.retriever
+        retrieval_miss = False
         for m in req.messages:
             if m.role == "system":
                 if not has_system:
@@ -245,6 +257,9 @@ def create_app(
             else:
                 content = m.content
                 if mode == "sql_only" and retriever is not None and m.role == "user":
+                    meta = retriever.retrieve(m.content, mode=mode)
+                    if meta.get("miss"):
+                        retrieval_miss = True
                     content = retriever.build_context_prompt(m.content, mode=mode)
                 messages.append({"role": m.role, "content": content})
         if not has_system:
@@ -273,10 +288,11 @@ def create_app(
             )
 
         latency_ms = round((time.perf_counter() - start) * 1000, 1)
-        app.state.metrics.record(mode=mode, latency_ms=latency_ms)
+        app.state.metrics.record(mode=mode, latency_ms=latency_ms, retrieval_miss=retrieval_miss)
         log.info(
-            "completion request_id=%s model=%s mode=%s messages=%d user_words=%d latency_ms=%s",
+            "completion request_id=%s model=%s mode=%s messages=%d user_words=%d latency_ms=%s retrieval_miss=%s",
             request_id, req.model, mode, len(req.messages), n_user_tokens, latency_ms,
+            retrieval_miss,
         )
         return {
             "id": f"chatcmpl-{int(time.time()*1000)}",
