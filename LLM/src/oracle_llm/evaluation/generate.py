@@ -90,6 +90,7 @@ def generate_from_local(
     temperature: float = 0.0,
     device: str = "cuda",
     progress: bool = True,
+    retriever=None,
 ) -> List[Dict]:
     """Generate candidates with a local Transformers model (+ optional LoRA)."""
     import torch
@@ -116,9 +117,12 @@ def generate_from_local(
     )
     with torch.no_grad():
         for i, t in enumerate(tasks, start=1):
+            user_content = _prompt_for(t)
+            if retriever is not None:
+                user_content = retriever.build_context_prompt(user_content, mode="sql_only")
             chat = [
                 {"role": "system", "content": SQL_ONLY_SYSTEM},
-                {"role": "user", "content": _prompt_for(t)},
+                {"role": "user", "content": user_content},
             ]
             prompt = tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
             inputs = tokenizer(prompt, return_tensors="pt").to(model.device)

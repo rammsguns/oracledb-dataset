@@ -125,9 +125,36 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--base-url", default="http://127.0.0.1:8800")
     ap.add_argument("--no-reset", action="store_true", help="skip schema resets")
+    ap.add_argument("--schema-index", help="approved schema index JSON to verify "
+                    "retrieval DDL matches the target schema")
     args = ap.parse_args()
 
+    # Step 3: verify the retrieval layer's DDL matches the real target schema
+    # (the index is built from live Oracle, so the DDL and schema agree). This
+    # confirms the schema context injected into sql_only prompts is correct.
+    if args.schema_index:
+        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/src")
+        from oracle_llm.serving.retrieval import SchemaRetriever
+
+        retriever = SchemaRetriever(args.schema_index)
+        print("== retrieval DDL verification ==")
+        mismatch = 0
+        for schema, _, _, val_sql in CASES:
+            if schema not in ("SALES_LAB", "LOGISTICS_LAB", "SUPPORT_LAB", "DOCUMENTS_LAB", "OPS_LAB"):
+                continue
+            ddl = retriever.format_schema_ddl(schema)
+            # The DDL must name the real table that the validation query targets.
+            table = val_sql.split(" FROM ")[-1].split(" ")[0].strip().rstrip(";").upper()
+            if table and table not in ddl:
+                print(f"  [FAIL] retrieval DDL for {schema} missing {table}")
+                mismatch += 1
+        if mismatch:
+            print(f"retrieval DDL mismatches: {mismatch}")
+        else:
+            print("  [PASS] retrieval DDL matches target schemas")
+
     failures = []
+    ora942 = 0
     for schema, prompt, expect, val_sql in CASES:
         if not args.no_reset:
             try:
@@ -149,11 +176,14 @@ def main() -> int:
         except Exception:  # noqa: BLE001
             expect_found = False
         mark = "PASS" if (ok_exec and expect_found) else "FAIL"
+        if "ORA-00942" in result:
+            ora942 += 1
         print(f"  [{mark}] {schema}: {prompt[:50]}... exec={result[:30]} expect={expect!r} found={expect_found}")
         if mark == "FAIL":
             failures.append((schema, prompt))
+    print(f"\nORA-00942 (table not found) count: {ora942}/{len(CASES)}")
     if failures:
-        print(f"\nFAILURES: {len(failures)}")
+        print(f"FAILURES: {len(failures)}")
         return 1
     print("\nAll regression cases passed.")
     return 0

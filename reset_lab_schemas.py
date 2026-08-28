@@ -51,9 +51,14 @@ def _reset_sales(cur):
     # Drop any candidate-created review trigger so re-seeding can't be blocked
     # by a stray DDL object (the original install has only the audit trigger;
     # the controlled-error task uses the llm_sales_add_order procedure, not a
-    # table trigger). Keeping this out of the pristine state preserves resets.
+    # table trigger). Matching by name pattern keeps resets robust to the
+    # different names candidates invent (TRG_SALES_ORDER_REVIEW,
+    # TRG_LLM_SALES_ORDERS_REVIEW, ...).
     try:
-        cur.execute("DROP TRIGGER TRG_SALES_ORDER_REVIEW")
+        cur.execute(
+            "BEGIN FOR t IN (SELECT trigger_name FROM user_triggers "
+            "WHERE table_name = 'LLM_SALES_ORDERS' AND trigger_name LIKE '%REVIEW%') "
+            "LOOP EXECUTE IMMEDIATE 'DROP TRIGGER ' || t.trigger_name; END LOOP; END;")
     except Exception:
         pass
     cur.execute("DELETE FROM llm_sales_orders")

@@ -72,14 +72,22 @@ def _cmd_generate(argv):
     ap.add_argument("--base-model", help="local base model (backend=local)")
     ap.add_argument("--adapter", help="LoRA adapter dir (backend=local)")
     ap.add_argument("--max-new-tokens", type=int, default=1024)
+    ap.add_argument("--schema-index", help="approved schema index JSON (injects "
+                    "schema-context retrieval into sql_only prompts)")
     args = ap.parse_args(argv)
 
     from oracle_llm.evaluation.generate import generate_from_endpoint, generate_from_local
 
+    retriever = None
+    if args.schema_index:
+        from oracle_llm.serving.retrieval import SchemaRetriever
+
+        retriever = SchemaRetriever(args.schema_index)
+
     if args.backend == "local":
         generate_from_local(
             args.catalog, args.base_model, args.adapter, out=args.out,
-            max_new_tokens=args.max_new_tokens,
+            max_new_tokens=args.max_new_tokens, retriever=retriever,
         )
     else:
         generate_from_endpoint(
@@ -198,6 +206,8 @@ def _cmd_serve(argv):
     ap.add_argument("--base-model", help="base model id (loads a real backend)")
     ap.add_argument("--adapter", help="LoRA adapter dir (loads a real backend)")
     ap.add_argument("--max-new-tokens", type=int, default=1024)
+    ap.add_argument("--schema-index", help="path to approved schema index JSON "
+                    "(enables schema-context retrieval in sql_only mode)")
     args = ap.parse_args(argv)
 
     from oracle_llm.serving.app import _Backend, serve
@@ -210,9 +220,16 @@ def _cmd_serve(argv):
             args.base_model, args.adapter, max_new_tokens=args.max_new_tokens
         ).generate
 
+    retriever = None
+    if args.schema_index:
+        from oracle_llm.serving.retrieval import SchemaRetriever
+
+        retriever = SchemaRetriever(args.schema_index)
+
     serve(
         host=args.host, port=args.port,
         backend=backend, default_max_tokens=args.max_new_tokens,
+        retriever=retriever,
     )
 
 

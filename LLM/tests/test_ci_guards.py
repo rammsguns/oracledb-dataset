@@ -118,9 +118,9 @@ def test_report_json_schema():
     if not (sel_p.is_file() and comp_p.is_file()):
         pytest.skip("artifacts/*.json not present (pristine release tree)")
     sel = json.loads(sel_p.read_text())
-    assert sel["selected_adapter"] == "sql-only-qlora"
+    assert sel["selected_adapter"] == "sql-only-rag"
     assert "held_out_scores" in sel
-    assert "sql_only" in sel["held_out_scores"]
+    assert "sql_only_rag" in sel["held_out_scores"]
 
     comp = json.loads(comp_p.read_text())
     assert comp["run_count"] == 5

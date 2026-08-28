@@ -166,6 +166,7 @@ def create_app(
     default_max_tokens: int = 1024,
     rate_limit: float = DEFAULT_RATE_LIMIT,
     rate_burst: int = DEFAULT_RATE_BURST,
+    retriever: Optional["SchemaRetriever"] = None,
 ) -> FastAPI:
     """Build the FastAPI app. ``backend`` defaults to an unconfigured stub."""
     if backend is None:
@@ -175,6 +176,7 @@ def create_app(
     app.state.default_max_tokens = default_max_tokens
     app.state.metrics = _Metrics()
     app.state.rate_limiter = _TokenBucket(rate_limit, rate_burst)
+    app.state.retriever = retriever
 
     @app.get("/health")
     def health():
@@ -230,16 +232,21 @@ def create_app(
             temperature = req.temperature if req.temperature is not None else 0.7
             system = EXPLAIN_SYSTEM
 
-        # Build messages: replace/insert system prompt per mode.
+        # Build messages: replace/insert system prompt per mode. For sql_only,
+        # inject retrieved schema context into the user turn (Step 2 RAG).
         messages = []
         has_system = False
+        retriever = app.state.retriever
         for m in req.messages:
             if m.role == "system":
                 if not has_system:
                     messages.append({"role": "system", "content": system})
                     has_system = True
             else:
-                messages.append({"role": m.role, "content": m.content})
+                content = m.content
+                if mode == "sql_only" and retriever is not None and m.role == "user":
+                    content = retriever.build_context_prompt(m.content, mode=mode)
+                messages.append({"role": m.role, "content": content})
         if not has_system:
             messages.insert(0, {"role": "system", "content": system})
 
