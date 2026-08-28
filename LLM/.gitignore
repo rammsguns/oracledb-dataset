@@ -1,0 +1,7 @@
+artifacts/*
+!artifacts/.gitkeep
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.egg-info/

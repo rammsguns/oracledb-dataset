@@ -1,0 +1,21 @@
+# Focused improvement: code_only + schema-aware supplement (P4).
+# Mixes oracle_train_code_only.jsonl (160) with oracle_train_schema_aware.jsonl
+# (22) to teach the model the real lab-schema object names (targets the
+# dominant ORA-00942 failure). Explicit source+weights policy; not implicit.
+base_model: Qwen/Qwen2.5-Coder-7B-Instruct
+base_model_revision: c03e6d358207e414f1eca0bb1891e29f1db0e242
+adapter: lora
+load_in_4bit: true
+max_length: 2048
+epochs: 3
+learning_rate: 0.0002
+per_device_batch_size: 1
+gradient_accumulation: 16
+seed: 42
+train_variant: sql_only
+# Explicit mixture: sources and (optional) relative weights.
+mixture:
+  - file: ../oracle_train_code_only.jsonl
+    weight: 1.0
+  - file: ../oracle_train_schema_aware.jsonl
+    weight: 1.0
