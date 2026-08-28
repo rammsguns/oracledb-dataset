@@ -80,6 +80,7 @@ class _Metrics:
         self.explain = 0
         self.total_latency_ms = 0.0
         self.retrieval_misses = 0
+        self.refusals = 0
         self.oracle_errors: dict = {}
         self._lock = None
         try:
@@ -96,7 +97,8 @@ class _Metrics:
         return fn()
 
     def record(self, *, mode: str, latency_ms: float, error: bool = False,
-               retrieval_miss: bool = False, oracle_error: str | None = None) -> None:
+               retrieval_miss: bool = False, oracle_error: str | None = None,
+               refusal: bool = False) -> None:
         def _f():
             self.requests += 1
             self.total_latency_ms += latency_ms
@@ -108,6 +110,8 @@ class _Metrics:
                 self.errors += 1
             if retrieval_miss:
                 self.retrieval_misses += 1
+            if refusal:
+                self.refusals += 1
             if oracle_error:
                 self.oracle_errors[oracle_error] = self.oracle_errors.get(oracle_error, 0) + 1
 
@@ -126,6 +130,8 @@ class _Metrics:
                 "avg_latency_ms": round(self.total_latency_ms / n, 1),
                 "retrieval_misses": self.retrieval_misses,
                 "retrieval_miss_rate": round(100.0 * self.retrieval_misses / (self.sql_only or 1), 2),
+                "refusals": self.refusals,
+                "refusal_rate": round(100.0 * self.refusals / n, 2),
                 "oracle_error_categories": dict(sorted(self.oracle_errors.items())),
             }
 
@@ -153,6 +159,28 @@ def _contains_markdown_fence(text: str) -> bool:
     return "```" in text or "~~~" in text
 
 
+# DML/DDL keywords that a read-only pilot must refuse.
+_WRITE_KEYWORDS = (
+    " insert ", " update ", " delete ", " merge ", " alter ", " drop ",
+    " create ", " truncate ", " grant ", " revoke ", " replace ",
+)
+
+
+def _asks_for_write(text: str) -> bool:
+    """True if the request appears to ask for a write (DML/DDL) operation.
+
+    Simple, conservative keyword scan on the normalized lowercase text.
+    Used only to REFUSE in read-only pilot mode (fail-closed toward SELECT).
+    """
+    t = (" " + (text or "").lower().replace("\n", " ") + " ").strip()
+    # A bare leading keyword like "insert ..." (no space before) is caught by
+    # checking the very start too.
+    for kw in _WRITE_KEYWORDS:
+        if kw in t or t.startswith(kw.strip()):
+            return True
+    return False
+
+
 class _Backend:
     """Thin abstraction so tests can inject a stub generator.
 
@@ -177,8 +205,15 @@ def create_app(
     rate_limit: float = DEFAULT_RATE_LIMIT,
     rate_burst: int = DEFAULT_RATE_BURST,
     retriever: Optional["SchemaRetriever"] = None,
+    read_only: bool = False,
 ) -> FastAPI:
-    """Build the FastAPI app. ``backend`` defaults to an unconfigured stub."""
+    """Build the FastAPI app. ``backend`` defaults to an unconfigured stub.
+
+    ``read_only=True`` enables the staged read-only pilot: the service answers
+    only SELECT/read-oriented SQL requests and refuses (422) requests that ask
+    for DML/DDL (INSERT/UPDATE/DELETE/MERGE/ALTER/DROP/CREATE/TRUNCATE/GRANT).
+    Refusals are tracked in /metrics (refusal_rate) for pilot monitoring.
+    """
     if backend is None:
         backend = _Backend()
     app = FastAPI(title="Oracle Database LLM", version="0.1.0")
@@ -187,6 +222,7 @@ def create_app(
     app.state.metrics = _Metrics()
     app.state.rate_limiter = _TokenBucket(rate_limit, rate_burst)
     app.state.retriever = retriever
+    app.state.read_only = read_only
 
     @app.get("/health")
     def health():
@@ -234,6 +270,19 @@ def create_app(
         mode = req.response_mode or DEFAULT_RESPONSE_MODE
         if mode not in ("sql_only", "explain"):
             raise HTTPException(status_code=400, detail="response_mode must be 'sql_only' or 'explain'")
+
+        # Staged read-only pilot: in sql_only mode, refuse requests that ask for
+        # DML/DDL (write operations). Track the refusal in metrics.
+        if app.state.read_only and mode == "sql_only":
+            user_all = " ".join(m.content for m in req.messages if m.role in ("user", "assistant"))
+            if _asks_for_write(user_all):
+                app.state.metrics.record(mode="sql_only", latency_ms=0, refusal=True)
+                log.info("read-only pilot refused DML/DDL request request_id=%s", request_id)
+                raise HTTPException(
+                    status_code=422,
+                    detail="read-only pilot: only SELECT/read-only SQL is allowed; "
+                           "this request asks for DML/DDL",
+                )
 
         if mode == "sql_only":
             temperature = req.temperature if req.temperature is not None else 0.0

@@ -91,6 +91,47 @@ def test_retriever_no_held_out(index):
     assert any("llm_task_catalog_eval" in d for d in DENIED_INDEX_SOURCES)
 
 
+def test_retriever_v2_enriched_format(tmp_path):
+    """The retriever reads the enriched v2 index and renders FK/check/descriptions."""
+    idx = tmp_path / "schema_index_v2.json"
+    idx.write_text(json.dumps({
+        "version": "v2",
+        "generated": "2026-08-28T00:00:00",
+        "schemas": {
+            "SALES_LAB": {
+                "tables": {
+                    "LLM_SALES_ORDERS": {
+                        "columns": [["ORDER_ID", "NUMBER"], ["REGION_ID", "NUMBER"]],
+                        "pk": ["ORDER_ID"],
+                        "unique": [],
+                        "fk": [{"column": "REGION_ID",
+                                "references": {"table": "LLM_SALES_REGIONS", "columns": ["REGION_ID"]}}],
+                        "check": ["amount >= 0"],
+                        "description": "Sales orders.",
+                    },
+                },
+                "views": {"LLM_SALES_MONTHLY_REPORT": "Monthly report."},
+            },
+        },
+    }))
+    r = SchemaRetriever(idx)
+    assert r.version == "v2"
+    ddl = r.format_schema_ddl("SALES_LAB")
+    assert "Sales orders." in ddl
+    assert "FOREIGN KEY (REGION_ID) REFERENCES LLM_SALES_REGIONS (REGION_ID)" in ddl
+    assert "CHECK (amount >= 0)" in ddl
+    assert "-- view LLM_SALES_MONTHLY_REPORT" in ddl
+
+
+def test_retriever_v1_still_works(index):
+    """v1-format index (schema -> {table: meta}) still renders."""
+    r = SchemaRetriever(index)
+    assert r.version == "v1"
+    ddl = r.format_schema_ddl("SALES_LAB")
+    assert "LLM_SALES_ORDERS" in ddl
+    assert "PRIMARY KEY (ORDER_ID)" in ddl
+
+
 def test_retriever_serving_integration(index):
     """sql_only completion with retriever injects context; explain does not."""
     from fastapi.testclient import TestClient
