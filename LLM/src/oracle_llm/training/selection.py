@@ -159,12 +159,14 @@ def check_promotion_thresholds(
     results_path: str | Path,
     thresholds: Optional[Dict] = None,
 ) -> SelectionDecision:
-    """Gate a new candidate against the selected adapter's thresholds (P3).
+    """Gate a NEW challenger against the selected adapter's thresholds (P3).
 
-    A candidate is only ``promoted`` when it clears the held-out execution and
-    controlled-error thresholds set by the current selected adapter, in
-    addition to the standard promotion checks. This prevents a regression from
-    being silently accepted.
+    A future challenger is only ``promoted`` when it clears the held-out
+    execution and controlled-error thresholds set by the current selected
+    adapter, in addition to the standard promotion checks. The incumbent
+    selected adapter (sql_only, chosen against the prior baseline) is
+    grandfathered and is not required to re-pass this stricter threshold —
+    this gate is only applied to candidates that come after it.
     """
     t = thresholds or DEFAULT_PROMOTION_THRESHOLDS
     s = _summarize(results_path)

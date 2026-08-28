@@ -48,6 +48,14 @@ REF_TS = "TO_TIMESTAMP('2026-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS')"
 
 
 def _reset_sales(cur):
+    # Drop any candidate-created review trigger so re-seeding can't be blocked
+    # by a stray DDL object (the original install has only the audit trigger;
+    # the controlled-error task uses the llm_sales_add_order procedure, not a
+    # table trigger). Keeping this out of the pristine state preserves resets.
+    try:
+        cur.execute("DROP TRIGGER TRG_SALES_ORDER_REVIEW")
+    except Exception:
+        pass
     cur.execute("DELETE FROM llm_sales_orders")
     cur.execute("DELETE FROM llm_sales_regions")
     cur.execute("DELETE FROM llm_sales_load_errors")

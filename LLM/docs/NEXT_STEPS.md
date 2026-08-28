@@ -64,9 +64,12 @@ no secret or prompt body is logged by default.
 4. Add a CI-safe test suite that checks data hashes, held-out deny-list rules,
    JSON schemas, and report parsing. Do not run Docker/Oracle or download a
    model in ordinary CI.
-5. Define the next promotion threshold before running experiments: overall
-   pass must exceed the selected adapter's 16.0%, controlled-error accuracy
-   must be at least 6/25, and all provenance fields must be present.
+5. Define the next promotion threshold before running experiments: a future
+   **challenger** must exceed the selected adapter's 16.0%, controlled-error
+   accuracy must be at least 6/25, and all provenance fields must be present.
+   The incumbent `sql_only` is grandfathered: it was selected against the prior
+   base-model baseline and is not required to re-pass its own stricter
+   threshold.
 
 **Acceptance:** a new candidate cannot be marked promoted without a passing
 gold harness, a complete report, and the stated thresholds.
