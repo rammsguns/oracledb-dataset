@@ -27,7 +27,12 @@ from typing import Dict, List, Optional
 DENIED_INDEX_SOURCES = {"llm_task_catalog_eval.jsonl", "llm_task_catalog_train.jsonl",
                         "llm_task_catalog_v2.jsonl", "llm_task_catalog_v3.jsonl",
                         "catalog_results", "catalog_results_v2", "catalog_results_v3",
-                        "catalog_results_gold", "catalog_results_demo"}
+                        "catalog_results_gold", "catalog_results_demo",
+                        # Acceptance/regression suite: never indexed (frozen).
+                        "acceptance", "acceptance_set", "final_acceptance",
+                        "llm_acceptance",
+                        # Blind final set: never indexed (independent owner).
+                        "blind", "blind_final", "FIN_LAB"}
 
 SCHEMA_TOKEN_PATTERN = re.compile(r"([A-Za-z_][A-Za-z0-9_]*(?:\.LAB)?)", re.IGNORECASE)
 
@@ -89,6 +94,7 @@ class SchemaRetriever:
             return ""
         tables = schema.get("tables", schema)  # tolerate v1 {table: meta}
         views = schema.get("views", {})
+        sequences = schema.get("sequences", [])
         lines = [f"-- {name} schema (tables, columns, keys)"]
         for tbl, meta in sorted(tables.items()):
             if not compact:
@@ -113,6 +119,9 @@ class SchemaRetriever:
             for v in sorted(views.keys()):
                 vdesc = views.get(v) or ""
                 lines.append(f"-- view {v}{(': ' + vdesc) if vdesc else ''}")
+        # Sequences: needed so NEXTVAL/CURRVAL resolve (ORA-02289 otherwise).
+        if sequences:
+            lines.append("-- sequences: " + ", ".join(sorted(sequences)))
         return "\n".join(lines)
 
     def build_context_prompt(self, user_content: str, *, mode: str = "sql_only",

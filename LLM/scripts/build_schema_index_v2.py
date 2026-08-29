@@ -18,7 +18,8 @@ versioned index:
               "check": ["CONDITION",...],
               "description": "concise table description"
           }},
-          "views": { "LLM_SALES_REGION_MV": "comment" }
+          "views": { "LLM_SALES_REGION_MV": "comment" },
+          "sequences": ["LLM_SALES_ORDER_SEQ", ...]
         }
       }
     }
@@ -130,6 +131,20 @@ def _dump_views(conn) -> dict:
     return views
 
 
+def _dump_sequences(conn) -> list:
+    """Sequence names so the model can use NEXTVAL/CURRVAL correctly.
+
+    Sequences are metadata-only (name). Included because generated PKs rely on
+    them; without the names the model invents one and hits ORA-02289 (sequence
+    does not exist). This is a non-model, non-ranked retrieval improvement.
+    """
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT sequence_name FROM user_sequences "
+        "WHERE sequence_name NOT LIKE 'BIN$%' ORDER BY sequence_name")
+    return [r[0] for r in cur.fetchall()]
+
+
 def main() -> None:
     out = sys.argv[1] if len(sys.argv) > 1 else str(
         Path(__file__).resolve().parent.parent / "artifacts" / "schema_index_v2.json")
@@ -144,7 +159,8 @@ def main() -> None:
         # attach descriptions
         for t in tables:
             tables[t]["description"] = DESCRIPTIONS.get(f"{schema}.{t}", "")
-        index["schemas"][schema] = {"tables": tables, "views": _dump_views(conn)}
+        index["schemas"][schema] = {"tables": tables, "views": _dump_views(conn),
+                                    "sequences": _dump_sequences(conn)}
         conn.close()
         print(f"{schema}: {len(tables)} tables, {len(index['schemas'][schema]['views'])} views")
     out_path = Path(out)

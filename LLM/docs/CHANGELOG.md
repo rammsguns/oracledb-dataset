@@ -3,6 +3,44 @@
 All notable changes to the Oracle Database LLM assistant (release/llm-vX.Y.Z
 branches). Semver: minor = new capability, patch = fix/operational.
 
+## [v1.0.6] — 2026-08-29 — Sequence metadata + benchmark governance (champion unchanged)
+### Added
+- **Sequence metadata in the schema index**: `scripts/build_schema_index_v2.py`
+  now extracts sequence names (`_dump_sequences`) and emits them per schema, and
+  `oracle_llm/serving/retrieval.py` renders `-- sequences: ...` in the schema
+  DDL. This lets the model use correct `NEXTVAL`/`CURRVAL` names instead of
+  inventing a sequence and hitting ORA-02289. **Non-model, non-ranked**
+  retrieval improvement; the champion config is unchanged.
+- **Governance deny-list** in `oracle_llm/serving/retrieval.py`: the frozen
+  acceptance/regression suite (`acceptance`, `acceptance_set`,
+  `final_acceptance`, `llm_acceptance`) and the blind final set (`blind`,
+  `blind_final`, `FIN_LAB`) are added to `DENIED_INDEX_SOURCES` so they can
+  never be indexed even accidentally.
+- Unit tests: `tests/test_retrieval.py` — sequence rendering
+  (`test_sequences_rendered_in_ddl`), sequence absence
+  (`test_sequences_absent_when_none`), acceptance-suite denial
+  (`test_deny_acceptance_suite`), blind-set denial (`test_deny_blind_final_set`).
+
+### Validation (development benchmark + independent regression suite only)
+The sequence fix was identified on the frozen acceptance/regression suite, so it
+is **acceptance-informed evidence**, not blind-final evidence. It was validated
+for release only on the 150-task development benchmark and the independent
+regression suite (identical model, decoding settings, and schema coverage;
+only the sequence metadata differs between the compared indexes):
+- Dev benchmark: incumbent + prior-approved index 50/150 (33.3%), CE 11/25 →
+  incumbent + sequence-enabled index **56/150 (37.3%), CE 15/25** (improves).
+- Independent regression suite: identical 15/16 in both configs (the single
+  failure is a pre-existing schema-detection limitation shared by both) — no
+  regression.
+
+### Notes
+- `--ranked` (task-level table ranking, v4) is **explicitly experimental and
+  off by default**. It is not part of this release; the champion remains
+  whole-schema `sql-only-rag`.
+- The final release decision must use an independently owned set (see
+  `blind_final/BLIND_FINAL_MANIFEST.md`); the retained FIN_LAB set is a frozen
+  regression reference, not a blind holdout.
+
 ## [v1.0.5] — 2026-08-28 — Compact retrieval analysis (champion unchanged)
 ### Added
 - **Compact retrieval mode** (`compact`): low-noise DDL (columns + PK + FK
