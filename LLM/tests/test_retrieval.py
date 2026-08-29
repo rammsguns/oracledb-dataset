@@ -91,6 +91,58 @@ def test_retriever_no_held_out(index):
     assert any("llm_task_catalog_eval" in d for d in DENIED_INDEX_SOURCES)
 
 
+def test_deny_acceptance_suite(index):
+    """The frozen acceptance/regression suite must never be indexed."""
+    r = SchemaRetriever(index)
+    assert r.detect_schema("final_acceptance") is None
+    assert r.detect_schema("acceptance_set") is None
+    assert any("acceptance" in d for d in DENIED_INDEX_SOURCES)
+
+
+def test_deny_blind_final_set(index):
+    """The blind final set (FIN_LAB) must never be indexed."""
+    r = SchemaRetriever(index)
+    assert r.detect_schema("query FIN_LAB accounts") is None
+    assert r.detect_schema("blind_final") is None
+    assert any("FIN_LAB" in d or "blind" in d for d in DENIED_INDEX_SOURCES)
+
+
+def test_sequences_rendered_in_ddl(tmp_path):
+    """Sequence names are rendered so NEXTVAL/CURRVAL resolve (ORA-02289 fix)."""
+    idx = tmp_path / "schema_index_seq.json"
+    idx.write_text(json.dumps({
+        "version": "v2", "generated": "x", "schemas": {
+            "SALES_LAB": {
+                "tables": {"LLM_SALES_ORDERS": {
+                    "columns": [["ORDER_ID", "NUMBER"]], "pk": ["ORDER_ID"],
+                    "unique": [], "fk": [], "check": [], "description": ""}},
+                "views": {},
+                "sequences": ["LLM_SALES_ORDER_SEQ", "LLM_SALES_ERROR_SEQ"],
+            },
+        }}))
+    r = SchemaRetriever(idx)
+    ddl = r.format_schema_ddl("SALES_LAB")
+    assert "LLM_SALES_ORDER_SEQ" in ddl
+    assert "LLM_SALES_ERROR_SEQ" in ddl
+    assert "sequences:" in ddl
+
+
+def test_sequences_absent_when_none(tmp_path):
+    """A schema with no sequences renders no sequence line (no ORA-02289 noise)."""
+    idx = tmp_path / "schema_index_noseq.json"
+    idx.write_text(json.dumps({
+        "version": "v2", "generated": "x", "schemas": {
+            "SALES_LAB": {
+                "tables": {"LLM_SALES_ORDERS": {
+                    "columns": [["ORDER_ID", "NUMBER"]], "pk": ["ORDER_ID"],
+                    "unique": [], "fk": [], "check": [], "description": ""}},
+                "views": {}, "sequences": [],
+            },
+        }}))
+    r = SchemaRetriever(idx)
+    assert "sequences:" not in r.format_schema_ddl("SALES_LAB")
+
+
 def test_retriever_v2_enriched_format(tmp_path):
     """The retriever reads the enriched v2 index and renders FK/check/descriptions."""
     idx = tmp_path / "schema_index_v2.json"
