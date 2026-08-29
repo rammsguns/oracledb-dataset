@@ -3,6 +3,31 @@
 All notable changes to the Oracle Database LLM assistant (release/llm-vX.Y.Z
 branches). Semver: minor = new capability, patch = fix/operational.
 
+## [v1.0.5] — 2026-08-28 — Compact retrieval analysis (champion unchanged)
+### Added
+- **Compact retrieval mode** (`compact`): low-noise DDL (columns + PK + FK
+  only, dropping check constraints, NOT-NULL noise, and prose descriptions) in
+  `oracle_llm/serving/retrieval.py`.
+- **Per-request context token budget** (`max_context_tokens`): truncates
+  retrieved DDL to a strict budget on `build_context_prompt`.
+- CLI wiring (`--compact`, `--max-context-tokens`) through
+  `oracle_llm/cli.py` and `oracle_llm/evaluation/generate.py`.
+- Analysis scripts: `scripts/analyze_v2_regression.py` (v1→v2 per-task deltas,
+  error-category shifts) and `scripts/measure_context_length.py` (v1/v2/v3
+  prompt-size comparison).
+- Reports: `docs/reports/s4-v2-regression-analysis.md` (root cause of the v2
+  regression) and `docs/reports/s5-rag-v3-compact.md` (v3 experiment).
+- Unit test: `tests/test_retrieval.py::test_retriever_compact_mode_and_budget`.
+
+### Status
+- **Champion unchanged**: `sql-only-rag` remains selected (36.7% held-out pass,
+  11/25 controlled-error).
+- v3 compact RAG (53/150, 35.3%, CE 12/25) recovered most of the v2 regression
+  but did **not** exceed the v1 champion; recorded as a candidate, NOT promoted
+  (see `docs/reports/s5-rag-v3-compact.md`).
+- Engineering/analysis release only; no model or retrieval configuration change
+  for the champion.
+
 ## [v1.0.4] — 2026-08-28 — Engineering/quality release (champion unchanged)
 ### Added
 - **Staged read-only pilot** (`--read-only`): refuse DML/DDL requests (422),

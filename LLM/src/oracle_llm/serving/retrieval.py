@@ -76,49 +76,65 @@ class SchemaRetriever:
                 return self._canon[token.strip().lower()]
         return None
 
-    def format_schema_ddl(self, name: str) -> str:
+    def format_schema_ddl(self, name: str, *, compact: bool = False) -> str:
         """Render a schema's table + view definitions as compact DDL.
 
-        Includes columns, PK, unique, FK, check constraints, and (when
-        present) a concise table description.
+        Full mode: columns, PK, unique, FK, check constraints, descriptions.
+        Compact mode (v3): columns + PK + FK only (drop checks and prose), for
+        a strict token budget. FK is retained because joins depend on it;
+        NOT-NULL/check noise and descriptions are dropped as low-signal.
         """
         schema = self.get_schema(name)
         if not schema:
             return ""
         tables = schema.get("tables", schema)  # tolerate v1 {table: meta}
         views = schema.get("views", {})
-        lines = [f"-- {name} schema (tables, columns, constraints, views)"]
+        lines = [f"-- {name} schema (tables, columns, keys)"]
         for tbl, meta in sorted(tables.items()):
-            desc = meta.get("description")
-            if desc:
-                lines.append(f"-- {tbl}: {desc}")
+            if not compact:
+                desc = meta.get("description")
+                if desc:
+                    lines.append(f"-- {tbl}: {desc}")
             cols = ", ".join(f"{c} {t}" for c, t in meta.get("columns", []))
             lines.append(f"{tbl} ({cols})")
             if meta.get("pk"):
                 lines.append(f"  PRIMARY KEY ({', '.join(meta['pk'])})")
-            for u in meta.get("unique", []):
-                lines.append(f"  UNIQUE ({u})")
+            if not compact:
+                for u in meta.get("unique", []):
+                    lines.append(f"  UNIQUE ({u})")
             for fk in meta.get("fk", []):
                 ref = fk.get("references", {})
                 lines.append(f"  FOREIGN KEY ({fk.get('column')}) "
                              f"REFERENCES {ref.get('table')} ({', '.join(ref.get('columns', []))})")
-            for c in meta.get("check", []):
-                lines.append(f"  CHECK ({c})")
-        for v in sorted(views.keys()):
-            vdesc = views.get(v) or ""
-            lines.append(f"-- view {v}{(': ' + vdesc) if vdesc else ''}")
+            if not compact:
+                for c in meta.get("check", []):
+                    lines.append(f"  CHECK ({c})")
+        if not compact:
+            for v in sorted(views.keys()):
+                vdesc = views.get(v) or ""
+                lines.append(f"-- view {v}{(': ' + vdesc) if vdesc else ''}")
         return "\n".join(lines)
 
-    def build_context_prompt(self, user_content: str, *, mode: str = "sql_only") -> str:
-        """Inject retrieved schema DDL into the user prompt for sql_only mode."""
+    def build_context_prompt(self, user_content: str, *, mode: str = "sql_only",
+                             compact: bool = False, max_context_tokens: int = 0) -> str:
+        """Inject retrieved schema DDL into the user prompt for sql_only mode.
+
+        ``compact=True`` uses the low-noise DDL (columns + PK + FK only).
+        ``max_context_tokens>0`` truncates the DDL to a strict budget (drop
+        trailing lines beyond the budget) to keep the task in the token window.
+        """
         if mode != "sql_only":
             return user_content  # explain mode keeps natural language
         schema = self.detect_schema(user_content)
         if not schema:
             return user_content  # no known schema -> no context
-        ddl = self.format_schema_ddl(schema)
+        ddl = self.format_schema_ddl(schema, compact=compact)
         if not ddl:
             return user_content
+        if max_context_tokens > 0:
+            words = ddl.split()
+            if len(words) > max_context_tokens:
+                ddl = " ".join(words[:max_context_tokens])
         return (
             f"Schema context (authoritative table and column names for {schema}):\n"
             f"{ddl}\n\n"
@@ -126,7 +142,8 @@ class SchemaRetriever:
             f"Task: {user_content}"
         )
 
-    def retrieve(self, user_content: str, *, mode: str = "sql_only") -> dict:
+    def retrieve(self, user_content: str, *, mode: str = "sql_only",
+                 compact: bool = False, max_context_tokens: int = 0) -> dict:
         """Return retrieval metadata for monitoring.
 
         Emits a dict with whether a schema was detected, the schema name, and
@@ -138,7 +155,7 @@ class SchemaRetriever:
         schema = self.detect_schema(user_content)
         if not schema:
             return {"detected": False, "schema": None, "injected": False, "miss": False}
-        ddl = self.format_schema_ddl(schema)
+        ddl = self.format_schema_ddl(schema, compact=compact)
         injected = bool(ddl)
         return {
             "detected": True,

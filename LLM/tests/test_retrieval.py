@@ -132,6 +132,38 @@ def test_retriever_v1_still_works(index):
     assert "PRIMARY KEY (ORDER_ID)" in ddl
 
 
+def test_retriever_compact_mode_and_budget(tmp_path):
+    """Compact v3 mode drops checks/descriptions and honors a token budget."""
+    idx = tmp_path / "idx.json"
+    idx.write_text(json.dumps({
+        "version": "v2", "generated": "x", "schemas": {
+            "SALES_LAB": {"tables": {
+                "LLM_SALES_ORDERS": {
+                    "columns": [["ORDER_ID", "NUMBER"], ["REGION_ID", "NUMBER"]],
+                    "pk": ["ORDER_ID"], "unique": [], "check": ["amount >= 0"],
+                    "description": "Sales orders.",
+                    "fk": [{"column": "REGION_ID",
+                            "references": {"table": "LLM_SALES_REGIONS", "columns": ["REGION_ID"]}}],
+                },
+            }, "views": {}},
+        }}))
+    r = SchemaRetriever(idx)
+    full = r.format_schema_ddl("SALES_LAB")
+    compact = r.format_schema_ddl("SALES_LAB", compact=True)
+    assert "CHECK (amount >= 0)" in full
+    assert "Sales orders." in full
+    assert "CHECK (amount >= 0)" not in compact
+    assert "Sales orders." not in compact
+    assert "FOREIGN KEY (REGION_ID) REFERENCES LLM_SALES_REGIONS (REGION_ID)" in compact
+    # token budget truncates the DDL span (wrapper text is fixed overhead)
+    p = r.build_context_prompt("orders in SALES_LAB", mode="sql_only",
+                               compact=True, max_context_tokens=10)
+    assert "Schema context" in p
+    assert "FOREIGN KEY" not in p  # FK line is beyond the 10-token budget
+    p_unlimited = r.build_context_prompt("orders in SALES_LAB", mode="sql_only", compact=True)
+    assert len(p.split()) < len(p_unlimited.split())
+
+
 def test_retriever_serving_integration(index):
     """sql_only completion with retriever injects context; explain does not."""
     from fastapi.testclient import TestClient
