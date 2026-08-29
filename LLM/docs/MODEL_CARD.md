@@ -34,6 +34,8 @@ alone (24/150, 16.0%) and the base model (8/150, 5.3%). See
 | v1.0.1 | sql_only-qlora | 16.0% | 6/25 | pipeline, eval, serving (follow-up) |
 | v1.0.2 | **sql-only-rag** | **36.7%** | **11/25** | schema-context retrieval added |
 | v1.0.3 | sql-only-rag | 36.7% | 11/25 | operational safety (disposable-schema guard, monitoring) |
+| v1.0.4 | sql-only-rag | 36.7% | 11/25 | engineering/quality: read-only pilot, enriched index, regression, governance (champion unchanged) |
+| v1.0.5 | sql-only-rag | 36.7% | 11/25 | compact-retrieval analysis (v3 compact RAG candidate, NOT promoted; champion unchanged) |
 
 Rollback target: **v1.0.1** (sql_only-qlora, no retrieval) is the tested
 fallback — disabling `--schema-index` restores the pre-retrieval behavior with

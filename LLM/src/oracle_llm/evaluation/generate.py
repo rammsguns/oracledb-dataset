@@ -91,6 +91,8 @@ def generate_from_local(
     device: str = "cuda",
     progress: bool = True,
     retriever=None,
+    compact: bool = False,
+    max_context_tokens: int = 0,
 ) -> List[Dict]:
     """Generate candidates with a local Transformers model (+ optional LoRA)."""
     import torch
@@ -119,7 +121,9 @@ def generate_from_local(
         for i, t in enumerate(tasks, start=1):
             user_content = _prompt_for(t)
             if retriever is not None:
-                user_content = retriever.build_context_prompt(user_content, mode="sql_only")
+                user_content = retriever.build_context_prompt(
+                    user_content, mode="sql_only", compact=compact,
+                    max_context_tokens=max_context_tokens)
             chat = [
                 {"role": "system", "content": SQL_ONLY_SYSTEM},
                 {"role": "user", "content": user_content},

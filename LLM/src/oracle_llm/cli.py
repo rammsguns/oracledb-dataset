@@ -74,6 +74,10 @@ def _cmd_generate(argv):
     ap.add_argument("--max-new-tokens", type=int, default=1024)
     ap.add_argument("--schema-index", help="approved schema index JSON (injects "
                     "schema-context retrieval into sql_only prompts)")
+    ap.add_argument("--compact", action="store_true", help="v3: low-noise DDL "
+                    "(columns+PK+FK only, drop checks/descriptions)")
+    ap.add_argument("--max-context-tokens", type=int, default=0,
+                    help="v3: strict per-request context token budget (0=unlimited)")
     args = ap.parse_args(argv)
 
     from oracle_llm.evaluation.generate import generate_from_endpoint, generate_from_local
@@ -88,6 +92,7 @@ def _cmd_generate(argv):
         generate_from_local(
             args.catalog, args.base_model, args.adapter, out=args.out,
             max_new_tokens=args.max_new_tokens, retriever=retriever,
+            compact=args.compact, max_context_tokens=args.max_context_tokens,
         )
     else:
         generate_from_endpoint(
