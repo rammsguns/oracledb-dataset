@@ -3,6 +3,24 @@
 All notable changes to the Oracle Database LLM assistant (release/llm-vX.Y.Z
 branches). Semver: minor = new capability, patch = fix/operational.
 
+## Evaluation / governance decision — 2026-08-30 (NOT a model release)
+
+Records the **Candidate A vs Candidate B** comparison outcome
+(`docs/reports/eval-decision-A-vs-B-2026-08-30.md`):
+
+- **Champion unchanged**: `sql-only-rag` (Candidate A) remains selected.
+- **Candidate B rejected** (`sql-only-errmix-rag`): evaluated only on the
+  frozen 150-task development benchmark (not the independent final set), with
+  a documented CO-schema regression (2/30 vs 9/30) and lower executed_ok
+  (57.33% vs 70.00%). Per `docs/BENCHMARK_GOVERNANCE.md` §4 this does not
+  clear the promotion gate. Archived as a non-promoted experiment at
+  `artifacts/candB_bundle/` (SHA-256 pinned).
+- **No model, retrieval, decoding, or deployment change.** This is a
+  governance/evaluation release only. The private final set is frozen as
+  regression-only and is not a promotion target.
+- Integrity hashes and aggregate dev-benchmark scores only — no private
+  evaluation content is recorded or referenced.
+
 ## [v1.0.6] — 2026-08-29 — Sequence metadata + benchmark governance (champion unchanged)
 ### Added
 - **Sequence metadata in the schema index**: `scripts/build_schema_index_v2.py`
