@@ -101,10 +101,14 @@ Rules:
   after approval.
 - **Maintainer**: updates CHANGELOG.md and MODEL_CARD.md per release.
 
-## 7. Current state (2026-08-28)
+## 7. Current state (2026-08-30)
 
-- Champion: **`sql-only-rag`** (v1.0.2), 36.7% held-out pass, 11/25
-  controlled-error.
-- Latest release branch: `release/llm-v1.0.3` (operational safety; approved,
-  tagged, pushed — NOT yet merged into `main`).
+- Champion: **`sql-only-rag`** (v1.0.2), 37.3% dev-benchmark pass, 15/25
+  controlled-error (sequence-enabled index). Deployed adapter unchanged.
+- Latest release branch: `release/llm-v1.0.6` (sequence metadata + benchmark
+  governance deny-list; merged to `main` at `a19c84d`).
+- **Evaluation decision (2026-08-30)**: Candidate A (`sql-only-rag`) remains
+  selected; Candidate B (`sql-only-errmix-rag`) rejected and archived as a
+  non-promoted experiment (see `docs/reports/eval-decision-A-vs-B-2026-08-30.md`).
+  This is a governance decision, not a model release.
 - Rollback target: v1.0.1.
