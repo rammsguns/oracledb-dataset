@@ -186,6 +186,12 @@ A real deployment sets a `generate` backend that loads the base model + adapter.
 ## 10. Monitoring
 
 - `/health` exposes model id, adapter version, and readiness (no secrets).
+- `/metrics` exposes request/error counts, latency, `retrieval_misses` /
+  `retrieval_miss_rate` (schema detected but no DDL injected), and
+  `schema_detection_misses` / `schema_detection_miss_rate` (no schema detected
+  in the request). A rising schema-detection-miss rate means users are
+  phrasing queries the system cannot map to an approved schema — a
+  prompt/schema-coverage gap, distinct from an index miss.
 - Request metadata (model, mode, message count, user word count) and latency
   are logged per request; credentials and full SQL prompts are NOT logged by
   default.

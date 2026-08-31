@@ -3,6 +3,29 @@
 All notable changes to the Oracle Database LLM assistant (release/llm-vX.Y.Z
 branches). Semver: minor = new capability, patch = fix/operational.
 
+## [v1.0.8] — 2026-08-31 — Schema-detection-miss monitoring (monitoring only; champion unchanged)
+
+### Added
+- **Schema-detection-miss metric** in `oracle_llm/serving/retrieval.py`:
+  `retrieve()` now emits a machine-readable `state` discriminating three cases:
+  - `injected` — schema detected and its DDL injected,
+  - `miss` — schema detected but DDL could not be injected (legacy
+    retrieval-miss semantics, preserved),
+  - `not_detected` — no known schema detected in the request text.
+  The legacy `detected` / `schema` / `injected` / `miss` fields are unchanged
+  for backward compatibility.
+- **`schema_detection_misses` and `schema_detection_miss_rate`** in `/metrics`
+  and in the completion log line (request metadata only — no prompts, SQL,
+  schema DDL, or credentials). This makes "user asked but no schema was
+  identified" observable, which previously fell through as a silent non-event.
+- Unit + serving-integration tests covering all three states and the metric
+  counters: `tests/test_retrieval.py` and `tests/test_eval_serve.py`.
+
+### Notes
+- Monitoring-only change. **No** model, adapter, decoding, retrieval ranking,
+  or SQL-execution-boundary change. Champion `sql-only-rag` unchanged.
+- No CLINIC_LAB, FIN_LAB, or private final set used.
+
 ## Evaluation / governance decision — 2026-08-30 (NOT a model release)
 
 Records the **Candidate A vs Candidate B** comparison outcome

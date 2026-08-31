@@ -80,6 +80,7 @@ class _Metrics:
         self.explain = 0
         self.total_latency_ms = 0.0
         self.retrieval_misses = 0
+        self.schema_detection_misses = 0
         self.refusals = 0
         self.oracle_errors: dict = {}
         self._lock = None
@@ -97,8 +98,8 @@ class _Metrics:
         return fn()
 
     def record(self, *, mode: str, latency_ms: float, error: bool = False,
-               retrieval_miss: bool = False, oracle_error: str | None = None,
-               refusal: bool = False) -> None:
+               retrieval_miss: bool = False, schema_detection_miss: bool = False,
+               oracle_error: str | None = None, refusal: bool = False) -> None:
         def _f():
             self.requests += 1
             self.total_latency_ms += latency_ms
@@ -110,6 +111,8 @@ class _Metrics:
                 self.errors += 1
             if retrieval_miss:
                 self.retrieval_misses += 1
+            if schema_detection_miss:
+                self.schema_detection_misses += 1
             if refusal:
                 self.refusals += 1
             if oracle_error:
@@ -130,6 +133,8 @@ class _Metrics:
                 "avg_latency_ms": round(self.total_latency_ms / n, 1),
                 "retrieval_misses": self.retrieval_misses,
                 "retrieval_miss_rate": round(100.0 * self.retrieval_misses / (self.sql_only or 1), 2),
+                "schema_detection_misses": self.schema_detection_misses,
+                "schema_detection_miss_rate": round(100.0 * self.schema_detection_misses / (self.sql_only or 1), 2),
                 "refusals": self.refusals,
                 "refusal_rate": round(100.0 * self.refusals / n, 2),
                 "oracle_error_categories": dict(sorted(self.oracle_errors.items())),
@@ -298,6 +303,7 @@ def create_app(
         has_system = False
         retriever = app.state.retriever
         retrieval_miss = False
+        schema_detection_miss = False
         for m in req.messages:
             if m.role == "system":
                 if not has_system:
@@ -309,6 +315,8 @@ def create_app(
                     meta = retriever.retrieve(m.content, mode=mode)
                     if meta.get("miss"):
                         retrieval_miss = True
+                    if meta.get("state") == "not_detected":
+                        schema_detection_miss = True
                     content = retriever.build_context_prompt(m.content, mode=mode)
                 messages.append({"role": m.role, "content": content})
         if not has_system:
@@ -337,11 +345,13 @@ def create_app(
             )
 
         latency_ms = round((time.perf_counter() - start) * 1000, 1)
-        app.state.metrics.record(mode=mode, latency_ms=latency_ms, retrieval_miss=retrieval_miss)
+        app.state.metrics.record(mode=mode, latency_ms=latency_ms,
+                                 retrieval_miss=retrieval_miss,
+                                 schema_detection_miss=schema_detection_miss)
         log.info(
-            "completion request_id=%s model=%s mode=%s messages=%d user_words=%d latency_ms=%s retrieval_miss=%s",
+            "completion request_id=%s model=%s mode=%s messages=%d user_words=%d latency_ms=%s retrieval_miss=%s schema_detection_miss=%s",
             request_id, req.model, mode, len(req.messages), n_user_tokens, latency_ms,
-            retrieval_miss,
+            retrieval_miss, schema_detection_miss,
         )
         return {
             "id": f"chatcmpl-{int(time.time()*1000)}",

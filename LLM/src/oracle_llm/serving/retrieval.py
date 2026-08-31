@@ -155,15 +155,23 @@ class SchemaRetriever:
                  compact: bool = False, max_context_tokens: int = 0) -> dict:
         """Return retrieval metadata for monitoring.
 
-        Emits a dict with whether a schema was detected, the schema name, and
-        whether DDL was injected. This is the hook for retrieval-miss metrics
-        (a request that named a schema but got no context is a retrieval miss).
+        Distinguishes three states:
+        - ``injected``: a schema was detected and its DDL was injected.
+        - ``miss``:     a schema was detected but no DDL could be injected
+                        (retrieval failed) — the legacy retrieval-miss case.
+        - ``not_detected``: no known schema was detected in the request text.
+
+        The ``detected`` / ``schema`` / ``injected`` / ``miss`` fields are kept
+        for backward compatibility; ``state`` is the machine-readable
+        discriminator.
         """
         if mode != "sql_only":
-            return {"detected": False, "schema": None, "injected": False, "miss": False}
+            return {"detected": False, "schema": None, "injected": False,
+                    "miss": False, "state": "not_detected"}
         schema = self.detect_schema(user_content)
         if not schema:
-            return {"detected": False, "schema": None, "injected": False, "miss": False}
+            return {"detected": False, "schema": None, "injected": False,
+                    "miss": False, "state": "not_detected"}
         ddl = self.format_schema_ddl(schema, compact=compact)
         injected = bool(ddl)
         return {
@@ -171,4 +179,5 @@ class SchemaRetriever:
             "schema": schema,
             "injected": injected,
             "miss": not injected,
+            "state": "injected" if injected else "miss",
         }
