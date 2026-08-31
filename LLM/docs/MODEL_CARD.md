@@ -37,6 +37,7 @@ alone (24/150, 16.0%) and the base model (8/150, 5.3%). See
 | v1.0.4 | sql-only-rag | 36.7% | 11/25 | engineering/quality: read-only pilot, enriched index, regression, governance (champion unchanged) |
 | v1.0.5 | sql-only-rag | 36.7% | 11/25 | compact-retrieval analysis (v3 compact RAG candidate, NOT promoted; champion unchanged) |
 | v1.0.6 | sql-only-rag | 37.3% | 15/25 | sequence metadata (NEXTVAL fix) + benchmark governance deny-list; champion unchanged. Dev-benchmark metrics are for the sequence-enabled index. Acceptance-informed, validated on dev+regression only; blind-final decision deferred to an independently owned set. |
+| v1.0.8 | sql-only-rag | (dev-benchmark, unchanged) | — | monitoring only: schema-detection-miss metric + tests; champion unchanged |
 
 ### Evaluation decision (2026-08-30, governance — not a model release)
 

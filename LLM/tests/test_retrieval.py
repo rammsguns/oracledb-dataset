@@ -91,6 +91,71 @@ def test_retriever_no_held_out(index):
     assert any("llm_task_catalog_eval" in d for d in DENIED_INDEX_SOURCES)
 
 
+def test_retriever_retrieve_three_states(index):
+    """retrieve() distinguishes injected / miss / not_detected states.
+
+    - Injected: schema detected and DDL injected (state="injected", miss=False).
+    - Miss: schema detected but no DDL (state="miss", miss=True) — only
+      reachable if a detected schema has no renderable DDL.
+    - Not detected: no known schema in the request (state="not_detected").
+    """
+    r = SchemaRetriever(index)
+    # State 1: schema detected + DDL injected.
+    injected = r.retrieve("Show orders from SALES_LAB", mode="sql_only")
+    assert injected["state"] == "injected"
+    assert injected["detected"] is True
+    assert injected["injected"] is True
+    assert injected["miss"] is False
+    # State 3: no schema detected (legacy field values preserved).
+    not_detected = r.retrieve("What is the total number of orders?", mode="sql_only")
+    assert not_detected["state"] == "not_detected"
+    assert not_detected["detected"] is False
+    assert not_detected["injected"] is False
+    assert not_detected["miss"] is False
+    # explain mode is never a detection/retrieval event.
+    explain = r.retrieve("List orders from SALES_LAB", mode="explain")
+    assert explain["state"] == "not_detected"
+    assert explain["detected"] is False
+    assert explain["miss"] is False
+
+
+def test_retriever_retrieve_miss_when_no_ddl(tmp_path, monkeypatch):
+    """A detected schema whose DDL cannot be rendered is a retrieval miss
+    (state='miss'), distinct from not_detected and preserving legacy miss."""
+    idx = tmp_path / "idx.json"
+    idx.write_text(json.dumps({
+        "version": "v2", "generated": "x", "schemas": {
+            "SALES_LAB": {"tables": {"LLM_SALES_ORDERS": {
+                "columns": [["ORDER_ID", "NUMBER"]], "pk": ["ORDER_ID"],
+                "unique": [], "fk": [], "check": [], "description": ""}},
+                "views": {}, "sequences": []},
+        }}))
+    r = SchemaRetriever(idx)
+    # Simulate a detection that resolves but fails to render DDL (e.g. a
+    # transient index problem) so the miss branch is exercised deterministically.
+    monkeypatch.setattr(r, "format_schema_ddl", lambda *a, **k: "")
+    meta = r.retrieve("Query SALES_LAB records", mode="sql_only")
+    assert meta["state"] == "miss"
+    assert meta["detected"] is True
+    assert meta["injected"] is False
+    assert meta["miss"] is True
+
+
+def test_retriever_schema_detection_miss_metric(index):
+    """The metrics counter distinguishes schema-detection misses (v1.0.8)."""
+    from oracle_llm.serving.app import _Metrics
+
+    m = _Metrics()
+    # Unrecognized-schema sql_only request -> schema_detection_miss=True.
+    m.record(mode="sql_only", latency_ms=1.0, schema_detection_miss=True)
+    # Recognized-schema sql_only request (no miss) -> nothing incremented.
+    m.record(mode="sql_only", latency_ms=1.0)
+    snap = m.snapshot()
+    assert snap["schema_detection_misses"] == 1
+    assert snap["schema_detection_miss_rate"] == 50.0  # 1/2 sql_only requests
+    assert snap["retrieval_misses"] == 0  # legacy semantics preserved
+
+
 def test_deny_acceptance_suite(index):
     """The frozen acceptance/regression suite must never be indexed."""
     r = SchemaRetriever(index)

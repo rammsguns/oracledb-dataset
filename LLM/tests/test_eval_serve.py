@@ -208,6 +208,46 @@ def test_metrics_endpoint():
     assert "error_rate" in m
 
 
+def test_schema_detection_miss_metric_serving(tmp_path):
+    """Serving integration: unrecognized schema increments schema_detection_misses;
+    recognized schema leaves it unchanged (and retrieval_miss semantics preserved)."""
+    import json
+
+    from fastapi.testclient import TestClient
+
+    from oracle_llm.serving.retrieval import SchemaRetriever
+
+    idx = tmp_path / "idx.json"
+    idx.write_text(json.dumps({
+        "version": "v2", "generated": "x", "schemas": {
+            "SALES_LAB": {"tables": {"LLM_SALES_ORDERS": {
+                "columns": [["ORDER_ID", "NUMBER"]], "pk": ["ORDER_ID"],
+                "unique": [], "fk": [], "check": [], "description": ""}},
+                "views": {}, "sequences": []},
+        }}))
+    app = create_app(
+        backend=_Backend(generate=lambda msgs, t: "SELECT 1 FROM dual;", model_id="m"),
+        retriever=SchemaRetriever(idx),
+    )
+    c = TestClient(app)
+
+    # Recognized schema -> no detection miss, DDL injected.
+    c.post("/v1/chat/completions",
+           json={"model": "m",
+                 "messages": [{"role": "user", "content": "Show orders from SALES_LAB"}],
+                 "response_mode": "sql_only"})
+    # Unrecognized schema -> schema-detection miss.
+    c.post("/v1/chat/completions",
+           json={"model": "m",
+                 "messages": [{"role": "user", "content": "What is the total number of orders?"}],
+                 "response_mode": "sql_only"})
+
+    m = c.get("/metrics").json()
+    assert m["schema_detection_misses"] == 1
+    assert m["schema_detection_miss_rate"] == 50.0  # 1/2 sql_only requests
+    assert m["retrieval_misses"] == 0  # neither named a known schema with no DDL
+
+
 def test_rate_limit():
     """A constrained rate limiter rejects excess requests with 429."""
     app = create_app(
