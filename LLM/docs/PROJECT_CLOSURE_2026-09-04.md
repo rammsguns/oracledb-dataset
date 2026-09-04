@@ -2,7 +2,7 @@
 
 **Closure date:** 2026-09-04
 
-**Project status:** COMPLETE — learning-stage release and on-demand operation
+**Project status:** CLOSED — learning-stage release and on-demand operation
 
 **Selected system:** `sql-only-rag-v1.0.8`
 
@@ -12,6 +12,10 @@ The Oracle SQL LLM learning project has met its defined objective: train an
 Oracle SQL adapter, compare challengers, select a champion, validate the
 generation-only application surface, provide a protected learning UI, and
 publish the selected adapter to Hugging Face.
+
+The principal formally closed this project on 2026-09-04. The released model,
+documentation, and operational handoff are the final deliverables for this
+milestone.
 
 No additional training or evaluation is required to close this milestone.
 Any future accuracy work is a new Candidate C initiative with a new evaluation
@@ -145,11 +149,10 @@ separate approval.
 - [x] On-demand startup and shutdown documented.
 - [x] Adapter published privately to Hugging Face and clean-download tested.
 - [x] No model service needs to remain running for project closure.
-- [ ] Principal reviews the rendered private Hugging Face model card.
-- [ ] Principal decides whether the Hugging Face repository remains private or
-      is made public.
-- [ ] Principal decides which untracked UI and operational documents should be
-      archived in a separate documentation/application release.
+- [x] Principal reviewed the private Hugging Face model card and file list.
+- [x] Hugging Face repository remains private at closure.
+- [x] Authenticated UI source was not recovered in the authoritative clone;
+      the older unauthenticated pending UI files remain excluded from closure.
 - [ ] Hugging Face write credentials are removed from shared machines when no
       longer required.
 
